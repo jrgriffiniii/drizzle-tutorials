@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "ganache-cli": "^6.12.2"
+  },
+  "dependencies": {
+    "truffle": "^5.4.6"
+  },
+  "scripts": {
+    "compile": "yarn run truffle compile",
+    "migrate": "yarn run truffle migrate",
+    "compile:test": "yarn run truffle compile --network=test",
+    "migrate:test": "yarn run truffle migrate --network=test"
+  }
+}
