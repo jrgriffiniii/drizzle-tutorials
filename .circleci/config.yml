@@ -1,0 +1,87 @@
+version: 2.1
+
+executors:
+  drizzle_tutorials:
+    docker:
+      - image: circleci/node:lts-fermium-browsers-legacy
+      - image: trufflesuite/ganache-cli:latest
+    working_directory: ~/drizzle-tutorials
+
+aliases:
+  - &defaults
+    executor: drizzle_tutorials
+
+  - &cache_key_node_modules
+    key: yarn-packages-{{ checksum "yarn.lock" }}
+
+commands:
+  install_packages:
+    steps:
+      - restore_cache:
+          <<: *cache_key_node_modules
+      - run:
+          name: Install package dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          <<: *cache_key_node_modules
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - install_packages
+      - persist_to_workspace:
+          root: ~/drizzle-tutorials
+          paths:
+            - node_modules
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Lint the Solidity source code files using solhint
+          command: yarn lint
+  migrate:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Migrate the contracts
+          command: yarn migrate
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Execute the Test Suites
+          command: yarn test
+      - persist_to_workspace:
+          root: ~/drizzle-tutorials
+          paths:
+            - build
+      - store_artifacts:
+          path: ~/drizzle-tutorials/coverage
+          destination: coverage
+      - store_test_results:
+          path: ~/drizzle-tutorials/coverage
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+      - migrate:
+          requires:
+            - build

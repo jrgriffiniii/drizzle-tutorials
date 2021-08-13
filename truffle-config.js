@@ -74,15 +74,14 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
     development: {
-      host: '127.0.0.1',
-      port: 8545,
-      network_id: "*",
-      websocket: true
+      host: 'localhost',
+      port: 9545,
+      network_id: "*"
     },
     test: {
       host: '0.0.0.0',
       port: 8545,
-      network_id: "foo"
+      network_id: "*"
     }
   },
 
