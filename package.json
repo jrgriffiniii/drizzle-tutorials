@@ -1,14 +1,22 @@
 {
   "devDependencies": {
-    "ganache-cli": "^6.12.2"
+    "ganache-cli": "^6.12.2",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solidity-coverage": "^0.7.17"
   },
   "dependencies": {
     "truffle": "^5.4.6"
   },
   "scripts": {
-    "compile": "yarn run truffle compile",
-    "migrate": "yarn run truffle migrate",
-    "compile:test": "yarn run truffle compile --network=test",
-    "migrate:test": "yarn run truffle migrate --network=test"
+    "compile": "yarn run truffle compile --network=test",
+    "compile:development": "yarn run truffle compile",
+    "lint": "yarn run prettier:check",
+    "migrate": "yarn run truffle migrate --network=test",
+    "migrate:development": "yarn run truffle migrate",
+    "prettier:check": "yarn run prettier --check .",
+    "prettier:write": "yarn run prettier --write .",
+    "test:coverage": "yarn run truffle run coverage",
+    "test": "yarn migrate && yarn run truffle test --network=test"
   }
 }

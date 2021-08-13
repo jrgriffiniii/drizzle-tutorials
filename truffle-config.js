@@ -74,16 +74,15 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
     development: {
-      host: '127.0.0.1',
-      port: 8545,
+      host: "localhost",
+      port: 9545,
       network_id: "*",
-      websocket: true
     },
     test: {
-      host: '0.0.0.0',
+      host: "0.0.0.0",
       port: 8545,
-      network_id: "foo"
-    }
+      network_id: "*",
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -107,10 +106,10 @@ module.exports = {
       settings: {
         optimizer: {
           enabled: true,
-          runs: 200
-        }
-      }
-    }
+          runs: 200,
+        },
+      },
+    },
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:
@@ -120,19 +119,21 @@ module.exports = {
   // NOTE: It is not possible to migrate your contracts to truffle DB and you should
   // make a backup of your artifacts to a safe location before enabling this feature.
   //
-  // After you backed up your artifacts you can utilize db by running migrate as follows: 
+  // After you backed up your artifacts you can utilize db by running migrate as follows:
   // $ truffle migrate --reset --compile-all
   //
   // db: {
-    // enabled: false,
-    // host: "127.0.0.1",
-    // adapter: {
-    //   name: "sqlite",
-    //   settings: {
-    //     directory: ".db"
-    //   }
-    // }
+  // enabled: false,
+  // host: "127.0.0.1",
+  // adapter: {
+  //   name: "sqlite",
+  //   settings: {
+  //     directory: ".db"
+  //   }
+  // }
   // }
 
-  contracts_build_directory: path.join(__dirname, "my-game/src/contracts"),
+  contracts_build_directory: path.join(__dirname, "app/src/contracts"),
+
+  plugins: ["solidity-coverage"],
 };

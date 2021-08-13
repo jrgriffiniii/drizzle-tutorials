@@ -1,0 +1,145 @@
+---
+version: 2.1
+
+executors:
+  drizzle_tutorials_executor:
+    docker:
+      - image: cimg/node:14.18
+      - image: trufflesuite/ganache-cli:latest
+    working_directory: ~/drizzle-tutorials
+
+  react_app_executor:
+    docker:
+      - image: cimg/node:14.18-browsers
+      - image: trufflesuite/ganache-cli:latest
+    working_directory: ~/drizzle-tutorials
+
+aliases:
+  - &defaults
+    executor: drizzle_tutorials_executor
+
+  - &cache_key_packages
+    key: yarn-packages-{{ checksum "yarn.lock" }}
+
+commands:
+  install_packages:
+    steps:
+      - restore_cache:
+          <<: *cache_key_packages
+      - run:
+          name: Install package dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          <<: *cache_key_packages
+
+  install_react_app_packages:
+    steps:
+      - restore_cache:
+          <<: *cache_key_packages
+      - run:
+          name: Install package dependencies
+          command: |
+            cd app/
+            yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - save_cache:
+          paths:
+            - ~/.cache/yarn
+          <<: *cache_key_packages
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - install_packages
+      - persist_to_workspace:
+          root: ~/drizzle-tutorials
+          paths:
+            - node_modules
+
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Lint the Solidity source code files using solhint
+          command: yarn lint
+
+  migrate:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Migrate the contracts
+          command: yarn migrate
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_packages
+      - run:
+          name: Execute the test suites for the Solidity Contracts
+          command: yarn test
+      - store_artifacts:
+          path: ~/drizzle-tutorials/coverage
+          destination: coverage
+      - store_test_results:
+          path: ~/drizzle-tutorials/coverage
+
+  # For the tutorial React App.
+  build_react_app:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_react_app_packages
+      - persist_to_workspace:
+          root: ~/drizzle-tutorials/app
+          paths:
+            - node_modules
+
+  test_react_app:
+    executor: react_app_executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/drizzle-tutorials
+      - install_react_app_packages
+      - run:
+          name: Test the source code files using Jest
+          command: |
+            cd app/
+            yarn test
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+      - migrate:
+          requires:
+            - build
+      - test:
+          requires:
+            - migrate
+      - build_react_app:
+          requires:
+            - migrate
+      - lint:
+          requires:
+            - build_react_app
+      - test_react_app:
+          requires:
+            - build_react_app
