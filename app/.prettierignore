@@ -1,0 +1,7 @@
+
+public
+src/**/*svg
+.eslintignore
+.gitignore
+.prettierignore
+..

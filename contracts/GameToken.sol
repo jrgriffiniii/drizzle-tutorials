@@ -1,8 +1,15 @@
 // SPDX-License-Identifier: MIT
-//pragma solidity >=0.4.22 <0.9.0;
+
 pragma solidity ^0.8.7;
 
 contract GameToken {
-  constructor() public {
-  }
+    mapping(address => uint256) balances;
+
+    constructor() public {
+        balances[tx.origin] = 100;
+    }
+
+    function getBalance(address addr) public view returns (uint256) {
+        return balances[addr];
+    }
 }
