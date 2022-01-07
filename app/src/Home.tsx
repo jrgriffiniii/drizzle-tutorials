@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import logo from './logo.svg';
 
@@ -45,6 +45,12 @@ type ProductProps = {
 
 type ProductsProps = {
   products: ProductProps[];
+};
+
+type AccountProps = {
+  drizzle: any;
+  drizzleState: any;
+  initialized: boolean;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -157,6 +163,70 @@ const Products: Function = ({ products }: ProductsProps) => {
   );
 };
 
+const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
+  let account: any = null;
+  let currentBalance: any = null;
+
+  let contract: any = null;
+  let dataKey: any = null;
+  let commodityBalance: any = null;
+
+  useEffect(() => {
+    contract = drizzle.contracts.Commodity;
+
+    dataKey = contract.methods["getBalance"].cacheCall(account, {
+      from: account
+    });
+  }, [])  
+
+  if (initialized) {
+    account = drizzleState.accounts[0];
+    currentBalance = drizzleState.accountBalances[account];
+    currentBalance = currentBalance*(0.1**18);
+
+    let contractState: any = drizzleState.contracts.Commodity;
+    commodityBalance = contractState.getBalance[dataKey] || 0.0;
+    commodityBalance = commodityBalance.toFixed(14);
+  }
+
+  return (
+    <Card>
+      <CardContent >
+        <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >My Account
+        </Typography>
+        {
+          initialized && account && currentBalance && (
+            <>
+              <Typography>
+                <strong>Account: {account}</strong>
+              </Typography>
+              <Typography>
+                <strong>Ξ Balance: {currentBalance}</strong>
+              </Typography>
+              <Typography>
+                <strong>🌽 Balance: {commodityBalance}</strong>
+              </Typography>
+            </>
+          )
+        }
+        {
+          !initialized && (
+            <Typography>
+              <strong>Please connect with your web wallet.</strong>
+            </Typography>
+          )
+        }
+      </CardContent>
+    </Card>
+  )
+}
+
 const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
   const classes = useStyles();
   const products: any[] = [
@@ -201,6 +271,11 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
 
       <main>
         <Container maxWidth="sm">
+          { initialized && (
+              <Account drizzle={drizzle} drizzleState={drizzleState} initialized={initialized} />
+            )
+          }
+
           <Typography
             component="h1"
             variant="h2"

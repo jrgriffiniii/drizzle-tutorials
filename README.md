@@ -1,11 +1,13 @@
 # Drizzle Tutorials
+
 [![CircleCI](https://circleci.com/gh/jrgriffiniii/drizzle-tutorials/tree/main.svg?style=svg)](https://circleci.com/gh/jrgriffiniii/drizzle-tutorials/tree/main)
 
 A set of Ethereum dApp tutorials implemented using Solidity and the Drizzle Suite.
 
 ## Requirements
-* Node.js (14.17.4 or the latest LTS Fermium release)
-* Yarn (1.22.11 or the latest 1.22.z release)
+
+- Node.js (14.17.4 or the latest LTS Fermium release)
+- Yarn (1.22.11 or the latest 1.22.z release)
 
 ## Development
 
@@ -30,6 +32,7 @@ $ yarn migrate
 ## Deploying the dApp
 
 First, please change to the dApp directory:
+
 ```bash
 $ cd app
 ```

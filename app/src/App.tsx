@@ -5,17 +5,24 @@ import { Drizzle } from '@drizzle/store';
 import Home from './Home';
 
 import GameToken from './contracts/GameToken.json';
+import Commodity from './contracts/Commodity.json';
 
 const drizzleOptions: any = {
-  contracts: [GameToken],
+  contracts: [GameToken, Commodity],
+  web3: {
+    fallback: {
+      type: "ws",
+      url: "ws://127.0.0.1:8545",
+    },
+  },
   events: {},
 };
 const drizzle: any = new Drizzle(drizzleOptions);
 
 type DrizzleContextProps = {
+  initialized: any;
   drizzle: any;
   drizzleState: any;
-  initialized: any;
 };
 
 const App = () => (
@@ -23,9 +30,9 @@ const App = () => (
     <DrizzleContext.Consumer>
       {({ drizzle, drizzleState, initialized }: DrizzleContextProps) => (
         <Home
+          initialized={initialized}
           drizzle={drizzle}
           drizzleState={drizzleState}
-          initialized={initialized}
         />
       )}
     </DrizzleContext.Consumer>
