@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSelector } from 'react-redux'
-
 import logo from './logo.svg';
 
 import './App.css';
@@ -177,10 +175,11 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
 
   const [gameTokenKey, setGameTokenKey] = useState<string | null>(null);
   const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
-  const [tokenBalanceSync, setTokenBalanceSync] = useState<boolean>(false);
 
   const [transactionId, setTransactionId] = useState<any | null>(null);
-  const [txPending, setTxPending] = useState<boolean>(false);
+  const [transaction, setTransaction] = useState<null | null>(null);
+  const [transactionHash, setTransactionHash] = useState<null | null>(null);
+  const [transactionStatus, setTransactionStatus] = useState<null | null>(null);
 
   useEffect(() => {
 
@@ -204,6 +203,22 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
         setBalance(accountBalance);
       }
     } else if(initialized && account) {
+
+      if (transactionId != null && transactionHash == null) {
+        const { transactions, transactionStack } = drizzleState;
+        const txHash = transactionStack[transactionId]; 
+        const cached = transactions[txHash];
+
+        if (cached != null) {
+          console.log(cached);
+          setTransaction(cached);
+          setTransactionStatus(cached.status);
+
+          if (cached.receipt) {
+            setTransactionHash(cached.receipt.transactionHash);
+          }
+        }
+      }
 
       const GameTokenState: any = drizzleState.contracts.GameToken;
       const GameToken: any = drizzle.contracts.GameToken;
@@ -274,13 +289,6 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
     }
   }
 
-  let transaction: any = null;
-  if (transactionId != null) {
-    const { transactions, transactionStack } = drizzleState;
-    const txHash = transactionStack[transactionId]; 
-    transaction = transactions[txHash];
-  }
-
   return (
     <Card>
       <CardContent >
@@ -348,10 +356,15 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
           </Container>
               <Container>
           {
-            initialized && transactionId != null && transaction != null && transaction.status == "success" && (
-                <Typography>
-                  Transaction: {transaction.receipt.transactionHash}
-                </Typography>
+            initialized && transactionId != null && transaction != null && (
+                <>
+                  <Typography>
+                    Transaction Hash: {transactionHash}
+                  </Typography>
+                  <Typography>
+                    Transaction Status: {transactionStatus}
+                  </Typography>
+                </>
             )
           }
           {
@@ -362,7 +375,7 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
             )
           }
           {
-            initialized && account && !transactionId && (
+            initialized && account && (gameTokenBalance == null && transactionId == null) && (
                 <Typography>
                   Please buy credits
                 </Typography>
