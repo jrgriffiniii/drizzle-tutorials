@@ -4,12 +4,15 @@ import logo from './logo.svg';
 
 import './App.css';
 
+import Account from './Account';
+import Exchange from './Exchange';
+import Market from './Market';
+
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -19,14 +22,8 @@ import ShopIcon from '@material-ui/icons/Shop';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box';
 
 type HomeProps = {
   drizzle: any;
@@ -163,7 +160,7 @@ const Products: Function = ({ products }: ProductsProps) => {
   );
 };
 
-const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
+const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
   const [account, setAccount] = useState<string | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
 
@@ -443,17 +440,12 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
             )
           }
 
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Commodities
-          </Typography>
+          { initialized && (
+              <Exchange drizzle={drizzle} drizzleState={drizzleState} initialized={initialized} />
+            )
+          }
 
-          <Products products={products} />
+          <Market />
         </Container>
       </main>
 

@@ -1,17 +1,6 @@
 const Commodity = artifacts.require("./Commodity.sol");
 
 contract("Commodity", async accounts => {
-  describe("#name", async () => {
-    it("should set and store the name during deployment", async () => {
-      const name = "Rice";
-      const lastCommodity = await Commodity.deployed();
-
-      const storedName = await lastCommodity.name.call();
-
-      assert.equal(storedName, name, "The name was not set and stored");
-    });
-  });
-
   describe("#getBalance", async () => {
     it("should access the balance of commodity units held by an account", async () => {
       const lastCommodity = await Commodity.deployed();

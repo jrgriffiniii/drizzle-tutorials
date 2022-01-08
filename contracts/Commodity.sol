@@ -5,12 +5,11 @@ pragma solidity ^0.8.7;
 contract Commodity {
     uint public constant MAX_BALANCE = 10000;
 
+    address private deployed;
     mapping (address => uint) balances;
-    string public name;
 
-    constructor(string memory _name) public {
-      name = _name;
-
+    constructor() public {
+      deployed = address(this);
       balances[tx.origin] = MAX_BALANCE;
     }
 

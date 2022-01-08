@@ -8,25 +8,24 @@ contract GameToken {
     address private deployed;
     mapping(address => uint256) balances;
 
+    event Received(address, uint);
+    event Fallback(address, uint);
+
     constructor() public {
       deployed = address(this);
       balances[deployed] = MAX_BALANCE;
     }
 
-    event Received(address, uint);
-
-    function receive() external payable {
+    receive() external payable {
       emit Received(msg.sender, msg.value);
     }
 
-    event Fallback(address, uint);
-
-    function fallback() external payable {
+    fallback() external payable {
       emit Fallback(msg.sender, msg.value);
     }
 
     function getDeposited() external view returns (uint256) {
-      return address(this).balance;
+      return deployed.balance;
     }
 
     function getSupply() external view returns (uint) {
@@ -37,21 +36,32 @@ contract GameToken {
       return balances[owner];
     }
 
-    function purchase(address buyer, uint amount) public returns(bool sufficient) {
-      if (balances[deployed] - amount <= 0) return false;
+    function purchase() external payable {
+      address payable seller = payable(deployed);
+      uint amount = msg.value;
 
+      // This must be denominated in Wei
+      //bool sent = seller.send(msg.value);
+      //require(sent, "Failed to transfer Ether to the exchange account");
+
+      //require(balances[deployed] - msg.value <= msg.value, "Not enough tokens available for purchase");
       balances[deployed] -= amount;
       balances[msg.sender] += amount; 
-
-      return true;
     }
 
-    function sell(address seller, uint amount) public returns(bool sufficient) {
-      if (balances[msg.sender] - amount <= 0) return false;
+    function sell() external payable returns (uint256) {
+      address payable seller = payable(msg.sender);
+      uint amount = msg.value;
 
+      // This must be denominated in Wei
+      //(bool sent, bytes memory data) = seller.call{value: msg.value}("");
+      //bool sent = seller.send(msg.value);
+      //require(sent, "Failed to transfer Ether to the seller account");
+
+      //require( balances[deployed] - msg.value <= msg.value, "Not enough tokens available for the seller account." );
       balances[deployed] += amount;
       balances[msg.sender] -= amount;
 
-      return true;
+      return seller.balance;
     }
 }
