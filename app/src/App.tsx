@@ -7,6 +7,8 @@ import Home from './Home';
 import GameToken from './contracts/GameToken.json';
 import Commodity from './contracts/Commodity.json';
 
+import store from "./middleware";
+
 const drizzleOptions: any = {
   contracts: [GameToken, Commodity],
   web3: {
@@ -17,7 +19,7 @@ const drizzleOptions: any = {
   },
   events: {},
 };
-const drizzle: any = new Drizzle(drizzleOptions);
+const drizzle: any = new Drizzle(drizzleOptions, store);
 
 type DrizzleContextProps = {
   initialized: any;
