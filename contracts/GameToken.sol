@@ -29,4 +29,12 @@ contract GameToken {
     function getBalance(address owner) external view returns (uint) {
       return balances[owner];
     }
+
+    function sell(address buyer, uint amount) public returns(bool sufficient) {
+      if (balances[msg.sender] < amount) return false;
+      balances[msg.sender] -= amount;
+
+      balances[buyer] += amount;
+      return true;
+    }
 }

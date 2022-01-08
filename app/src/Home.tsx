@@ -182,6 +182,8 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
   //let gameTokenBalance: number | null = null;
   const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
 
+  const [transactionId, setTransactionId] = useState<any | null>(null);
+
   useEffect(() => {
     if (initialized && drizzleState.accounts && !account) {
       const primaryAccount: string = drizzleState.accounts[0];
@@ -222,6 +224,32 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
       }
     }
   }, []);
+
+  const buyToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
+    const GameToken = drizzle.contracts.GameToken;
+
+    if (account) {
+      const stackId: any = GameToken.methods["sell"].cacheSend(account, 1, {
+        from: account
+      })
+
+      console.log(stackId);
+      setTransactionId(stackId);
+    }
+  }
+
+  let transaction: any = null;
+
+  const transactionComplete: Function = () => {
+
+    if (transactionId) {
+      const { transactions, transactionStack } = drizzleState;
+      const txHash = transactionStack[transactionId]; 
+      if (txHash) {
+        transaction = transactions[txHash];
+      }
+    }
+  }
 
   return (
     <Card>
@@ -270,6 +298,42 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
           )
         }
       </CardContent>
+      <CardActions>
+          <Container>
+          <form>
+            <Button color="primary" variant="contained" fullWidth onClick={buyToken}>
+              Buy Credits
+            </Button>
+          </form>
+          </Container>
+          {
+            initialized && transactionId != null && transactionComplete() && (
+              <Container>
+                <Typography>
+                  Transaction: {transaction}
+                </Typography>
+              </Container>
+            )
+          }
+          {
+            initialized && transactionId != null && (
+              <Container>
+                <Typography>
+                  Transaction in progress...
+                </Typography>
+              </Container>
+            )
+          }
+          {
+            initialized && transactionId == null && (
+              <Container>
+                <Typography>
+                  Please buy credits
+                </Typography>
+              </Container>
+            )
+          }
+      </CardActions>
     </Card>
   )
 }
@@ -345,3 +409,5 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
 };
 
 export default Home;
+
+//const HomeContainer = drizzleConnect(Home, mapStateToProps);
