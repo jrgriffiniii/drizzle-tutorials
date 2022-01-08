@@ -177,14 +177,12 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
 
   const [gameTokenKey, setGameTokenKey] = useState<string | null>(null);
   const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
+  const [tokenBalanceSync, setTokenBalanceSync] = useState<boolean>(false);
 
   const [transactionId, setTransactionId] = useState<any | null>(null);
+  const [txPending, setTxPending] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('trace4')
-    console.log(initialized)
-    console.log(gameTokenKey)
-    console.log(transactionId)
 
     if (initialized && !account && Object.keys(drizzleState.accounts).length > 0) {
       const primaryAccount: string = drizzleState.accounts[0];
@@ -205,96 +203,41 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
         accountBalance = accountBalance*(0.1**18);
         setBalance(accountBalance);
       }
-    } else if(initialized && account && transactionId != null) {
-      // If the transaction is null
-      const GameToken: any = drizzle.contracts.GameToken;
-
-      const cachedGameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
-        from: account
-      });
-
-      setTransactionId(null);
-      setGameTokenKey(cachedGameTokenCacheKey);
     } else if(initialized && account) {
 
-      if(gameTokenKey == null ) {
-        // If the token has not been initialized
-        const GameToken: any = drizzle.contracts.GameToken;
-
-        const cachedGameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
-          from: account
-        });
-
-        console.log('race')
-        setGameTokenKey(cachedGameTokenCacheKey);
-
-        //setGameTokenKey({ 'key': cachedGameTokenCacheKey, 'transactionId': transactionId });
-        /*
-        if (transactionId != null) {
-          setTransactionId(null);
-        }
-        */
-
-        /*
-        console.log('condition')
-        const GameTokenState: any = drizzleState.contracts.GameToken;
-        let cachedGameTokenBalance: any = GameTokenState.getBalance[cachedGameTokenCacheKey] || 0.0;
-        console.log(cachedGameTokenBalance);
-        //cachedGameTokenBalance = parseInt(cachedGameTokenBalance.value);
-        cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
-
-        debugger;
-        console.log(cachedGameTokenBalance);
-        setGameTokenBalance(cachedGameTokenBalance);
-        */
-      }
-
-      if(tokenSupply == null ) {
-
-        // If the token has not been initialized
-        const GameToken: any = drizzle.contracts.GameToken;
-
+      const GameTokenState: any = drizzleState.contracts.GameToken;
+      const GameToken: any = drizzle.contracts.GameToken;
+      
+      if(tokenSupplyKey == null || tokenSupply == null) {
         const key = GameToken.methods["getSupply"].cacheCall({
           from: account
         });
 
-        setTokenSupplyKey(key);
-      }
-
-      if(tokenSupplyKey != null) {
-        const GameTokenState: any = drizzleState.contracts.GameToken;
-
-        if (GameTokenState.getSupply.hasOwnProperty(tokenSupplyKey)) {
-
-          let cached: any = GameTokenState.getSupply[tokenSupplyKey] || 0.0;
-          console.log(cached);
+        if (GameTokenState.getSupply.hasOwnProperty(key)) {
+          let cached: any = GameTokenState.getSupply[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
-          console.log(cached);
-
           if (tokenSupply != cached) {
             setTokenSupply(cached);
+            setTokenSupplyKey(key);
           }
         }
       }
 
-      console.log(gameTokenKey);
-      console.log(transactionId)
-      console.log(drizzleState.contracts.GameToken);
+      if(gameTokenKey == null || gameTokenBalance == null) {
+        const key = GameToken.methods["getBalance"].cacheCall(account, {
+          from: account
+        });
 
-      if(gameTokenKey != null) {
-        const GameTokenState: any = drizzleState.contracts.GameToken;
+        if (GameTokenState.getBalance.hasOwnProperty(key)) {
+          let cached: any = GameTokenState.getBalance[key] || 0.0;
+          cached = parseInt(cached.value);
+          cached = cached.toFixed(14);
 
-        if (GameTokenState.getBalance.hasOwnProperty(gameTokenKey)) {
-
-          let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenKey] || 0.0;
-          cachedGameTokenBalance = parseInt(cachedGameTokenBalance.value);
-          cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
-          console.log(cachedGameTokenBalance);
-
-          if (cachedGameTokenBalance != gameTokenBalance) {
-            setGameTokenBalance(cachedGameTokenBalance);
+          if (cached != gameTokenBalance) {
+            setGameTokenBalance(cached);
+            setGameTokenKey(key);
           }
         }
       }
@@ -302,13 +245,15 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
   });
 
   const buyToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
-
     if (account) {
       const GameToken = drizzle.contracts.GameToken;
+
       const stackId: any = GameToken.methods["purchase"].cacheSend(account, 1, {
         from: account
       })
 
+      setGameTokenKey(null);
+      setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
   }
@@ -323,6 +268,8 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
         from: account
       })
 
+      setGameTokenKey(null);
+      setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
   }
