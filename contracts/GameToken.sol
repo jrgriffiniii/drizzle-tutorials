@@ -3,10 +3,11 @@
 pragma solidity ^0.8.7;
 
 contract GameToken {
+    uint public constant MAX_BALANCE = 1000;
     mapping(address => uint256) balances;
 
     constructor() public {
-      balances[tx.origin] = 1000;
+      balances[tx.origin] = MAX_BALANCE;
     }
 
     event Received(address, uint);
@@ -21,7 +22,11 @@ contract GameToken {
       emit Fallback(msg.sender, msg.value);
     }
 
-    function getBalance() external view returns (uint256) {
+    function getDeposited() external view returns (uint256) {
       return address(this).balance;
+    }
+
+    function getBalance(address owner) external view returns (uint) {
+      return balances[owner];
     }
 }

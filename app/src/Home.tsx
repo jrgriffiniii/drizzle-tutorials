@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import logo from './logo.svg';
 
@@ -164,30 +164,64 @@ const Products: Function = ({ products }: ProductsProps) => {
 };
 
 const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
-  let account: any = null;
-  let currentBalance: any = null;
+  //let account: string | null = null;
+  const [account, setAccount] = useState<string | null>(null);
+  //let balance: number | null = null;
+  const [balance, setBalance] = useState<number | null>(null);
 
-  let contract: any = null;
-  let dataKey: any = null;
-  let commodityBalance: any = null;
+  //let contract: any = null;
+  //const [Corn, setCorn] = useState(null);
+  //let dataKey: any = null;
+  const [cornKey, setCornKey] = useState<string | null>(null);
+  //let commodityBalance: any = null;
+  const [cornBalance, setCornBalance] = useState<string | null>(null);
+
+  //let gameTokenContract: string;
+  //let gameTokenKey: string | null = null;
+  const [gameTokenKey, setGameTokenKey] = useState<string | null>(null);
+  //let gameTokenBalance: number | null = null;
+  const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
 
   useEffect(() => {
-    contract = drizzle.contracts.Commodity;
+    if (initialized && drizzleState.accounts && !account) {
+      const primaryAccount: string = drizzleState.accounts[0];
+      setAccount(primaryAccount);
+      // @todo Replace this
+      const Corn: any = drizzle.contracts.Commodity;
 
-    dataKey = contract.methods["getBalance"].cacheCall(account, {
-      from: account
-    });
-  }, [])  
+      const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
+        from: primaryAccount 
+      });
+      setCornKey(cornCacheKey);
 
-  if (initialized) {
-    account = drizzleState.accounts[0];
-    currentBalance = drizzleState.accountBalances[account];
-    currentBalance = currentBalance*(0.1**18);
+      const GameToken: any = drizzle.contracts.GameToken;
 
-    let contractState: any = drizzleState.contracts.Commodity;
-    commodityBalance = contractState.getBalance[dataKey] || 0.0;
-    commodityBalance = commodityBalance.toFixed(14);
-  }
+      const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(primaryAccount, {
+        from: primaryAccount
+      });
+      setGameTokenKey(gameTokenCacheKey);
+
+      if (primaryAccount) {
+        let accountBalance: number = drizzleState.accountBalances[primaryAccount];
+        accountBalance = accountBalance*(0.1**18);
+        setBalance(accountBalance);
+      }
+
+      if (cornCacheKey) {
+        let CornState: any = drizzleState.contracts.Commodity;
+        let cachedCornBalance: any = CornState.getBalance[cornCacheKey] || 0.0;
+        cachedCornBalance = cachedCornBalance.toFixed(14);
+        setCornBalance(cachedCornBalance);
+      }
+
+      if (gameTokenCacheKey) {
+        const GameTokenState: any = drizzleState.contracts.GameToken;
+        let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenCacheKey] || 0.0;
+        cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
+        setGameTokenBalance(cachedGameTokenBalance);
+      }
+    }
+  }, []);
 
   return (
     <Card>
@@ -201,18 +235,31 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
         >My Account
         </Typography>
         {
-          initialized && account && currentBalance && (
-            <>
+          account && (
               <Typography>
                 <strong>Account: {account}</strong>
               </Typography>
+          )
+        }
+        {
+          balance && (
               <Typography>
-                <strong>Ξ Balance: {currentBalance}</strong>
+                <strong>Ξ Balance: {balance}</strong>
               </Typography>
+          )
+        }
+        {
+          gameTokenBalance && (
               <Typography>
-                <strong>🌽 Balance: {commodityBalance}</strong>
+                <strong>🏦 Balance: {gameTokenBalance}</strong>
               </Typography>
-            </>
+          )
+        }
+        {
+          cornBalance && (
+              <Typography>
+                <strong>🌽 Balance: {cornBalance}</strong>
+              </Typography>
           )
         }
         {
