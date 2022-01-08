@@ -6,89 +6,20 @@ contract("GameToken", async (accounts) => {
       const newGameToken = await GameToken.deployed();
       const account = accounts[0];
 
-      web3.eth.handleRevert = true;
       let balance = await web3.eth.getBalance(account);
       let deposited = await web3.eth.getBalance(newGameToken.address);
 
-      console.log(balance);
-      console.log(newGameToken.address);
-      console.log(deposited);
-      await web3.eth.sendTransaction({from: account, to: accounts[1], value: 1, gas: "4712388"});
-      console.log("success");
+      await web3.eth.sendTransaction({from: account, to: newGameToken.address, value: 1});
 
-      try {
-        let gas = await web3.eth.estimateGas({
-          from: account,
-          to: accounts[1],
-          amount: "1000000000000000000"
-        })
-        console.log("success2");
-        console.log(gas);
-        gas = await web3.eth.estimateGas({
-          from: account,
-          to: newGameToken.address,
-          amount: "1"
-        })
-        console.log("success3");
-        console.log(gas);
-        await web3.eth.sendTransaction({from: account, to: newGameToken.address, value: 1, gas: gas});
+      let updatedBalance = await web3.eth.getBalance(account);
+      assert(updatedBalance < balance, "Accounts cannot transfer ETH to the contract");
 
-        let updated = await web3.eth.getBalance(account);
-        //assert.equal(balance, 1, "Accounts can transfer ETH");
-        console.log("updated");
-        console.log(updated);
-        console.log("balance");
-        console.log(balance);
+      let updatedDeposited = await web3.eth.getBalance(newGameToken.address);
+      assert(updatedDeposited > deposited, "The contract cannot store ETH transferred from an account");
 
-        assert(updated < balance, "Accounts can transfer ETH to the contract");
-      } catch(error) {
-        console.error(error);
+      let retrieved = await newGameToken.getDeposited.call({ from: account });
 
-      }
-
-      /*
-      let one_eth = web3.toWei(1, "ether");
-      await web3.eth.sendTransaction({from: account, to: lastGameToken.address, value: one_eth});
-      let balance_wei = await web3.eth.getBalance(lastGameToken.address);
-      let balance_ether = web3.fromWei(balance_wei.toNumber(), "ether");
-      assert.equal(deposit, 1, "Accounts can transfer ETH");
-      */
-
-      //const amount = 1 * 10**18;
-      /*
-      const amount = 1;
-
-      await lastGameToken.purchase({ from: account, value: amount });
-
-      let cached = await lastGameToken.getDeposited.call();
-      let deposited = cached.toString();
-      deposited = parseInt(deposited) / 10**18;
-      */
-
-      /*
-      const cachedBalance = await lastGameToken.getDeposited.call(account, { from: account });
-      let accountBalance = cachedBalance.toString();
-      accountBalance = parseInt(accountBalance) / 10**18;
-      */
-
-      /*
-      await lastGameToken.sell({ from: account, value: amount });
-      */
-
-      /*
-      let cachedUpdate = await lastGameToken.getDeposited.call(account, { from: account });
-      let updatedBalance = cachedUpdate.toString();
-      updatedBalance = parseInt(updatedBalance) / 10**18;
-      */
-
-      /*
-      cached = await lastGameToken.getDeposited.call({ from: account });
-      updatedDeposited = cachedUpdate.toString();
-      updatedDeposited = parseInt(updatedBalance) / 10**18;
-      */
-
-      //assert(accountBalance < updatedBalance, "The account balance should be increased after a sale");
-      //assert.equal(updatedDeposited, 1.80143887 / 10**10, "The deposited balance should be decreased after a sale");
+      assert.equal(retrieved, updatedDeposited, "The contract cannot retrieve the ETH stored internally");
     });
   });
 
