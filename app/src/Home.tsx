@@ -166,85 +166,159 @@ const Products: Function = ({ products }: ProductsProps) => {
 };
 
 const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
-  //let account: string | null = null;
   const [account, setAccount] = useState<string | null>(null);
-  //let balance: number | null = null;
   const [balance, setBalance] = useState<number | null>(null);
 
-  //let contract: any = null;
-  //const [Corn, setCorn] = useState(null);
-  //let dataKey: any = null;
   const [cornKey, setCornKey] = useState<string | null>(null);
-  //let commodityBalance: any = null;
   const [cornBalance, setCornBalance] = useState<string | null>(null);
 
-  //let gameTokenContract: string;
-  //let gameTokenKey: string | null = null;
+  const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
+  const [tokenSupply, setTokenSupply] = useState<string | null>(null);
+
   const [gameTokenKey, setGameTokenKey] = useState<string | null>(null);
-  //let gameTokenBalance: number | null = null;
   const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
 
   const [transactionId, setTransactionId] = useState<any | null>(null);
 
   useEffect(() => {
-    if (!account && initialized && Object.keys(drizzleState.accounts).length > 0) {
+    console.log('trace4')
+    console.log(initialized)
+    console.log(gameTokenKey)
+    console.log(transactionId)
 
+    if (initialized && !account && Object.keys(drizzleState.accounts).length > 0) {
       const primaryAccount: string = drizzleState.accounts[0];
       setAccount(primaryAccount);
 
       if (primaryAccount) {
         // @todo Replace this
+        /*
         const Corn: any = drizzle.contracts.Commodity;
 
         const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
           from: primaryAccount 
         });
         setCornKey(cornCacheKey);
+        */
 
+        let accountBalance: number = drizzleState.accountBalances[primaryAccount];
+        accountBalance = accountBalance*(0.1**18);
+        setBalance(accountBalance);
+      }
+    } else if(initialized && account && transactionId != null) {
+      // If the transaction is null
+      const GameToken: any = drizzle.contracts.GameToken;
+
+      const cachedGameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
+        from: account
+      });
+
+      setTransactionId(null);
+      setGameTokenKey(cachedGameTokenCacheKey);
+    } else if(initialized && account) {
+
+      if(gameTokenKey == null ) {
+        // If the token has not been initialized
         const GameToken: any = drizzle.contracts.GameToken;
 
-        const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(primaryAccount, {
-          from: primaryAccount
+        const cachedGameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
+          from: account
         });
-        setGameTokenKey(gameTokenCacheKey);
 
-        if (primaryAccount) {
-          let accountBalance: number = drizzleState.accountBalances[primaryAccount];
-          accountBalance = accountBalance*(0.1**18);
-          setBalance(accountBalance);
+        console.log('race')
+        setGameTokenKey(cachedGameTokenCacheKey);
+
+        //setGameTokenKey({ 'key': cachedGameTokenCacheKey, 'transactionId': transactionId });
+        /*
+        if (transactionId != null) {
+          setTransactionId(null);
         }
+        */
 
-        if (cornCacheKey) {
-          let CornState: any = drizzleState.contracts.Commodity;
-          let cachedCornBalance: any = CornState.getBalance[cornCacheKey] || 0.0;
-          cachedCornBalance = cachedCornBalance.toFixed(14);
-          setCornBalance(cachedCornBalance);
+        /*
+        console.log('condition')
+        const GameTokenState: any = drizzleState.contracts.GameToken;
+        let cachedGameTokenBalance: any = GameTokenState.getBalance[cachedGameTokenCacheKey] || 0.0;
+        console.log(cachedGameTokenBalance);
+        //cachedGameTokenBalance = parseInt(cachedGameTokenBalance.value);
+        cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
+
+        debugger;
+        console.log(cachedGameTokenBalance);
+        setGameTokenBalance(cachedGameTokenBalance);
+        */
+      }
+
+      if(tokenSupply == null ) {
+
+        // If the token has not been initialized
+        const GameToken: any = drizzle.contracts.GameToken;
+
+        const key = GameToken.methods["getSupply"].cacheCall({
+          from: account
+        });
+
+        setTokenSupplyKey(key);
+      }
+
+      if(tokenSupplyKey != null) {
+        const GameTokenState: any = drizzleState.contracts.GameToken;
+
+        if (GameTokenState.getSupply.hasOwnProperty(tokenSupplyKey)) {
+
+          let cached: any = GameTokenState.getSupply[tokenSupplyKey] || 0.0;
+          console.log(cached);
+          cached = parseInt(cached.value);
+          cached = cached.toFixed(14);
+
+          console.log(cached);
+
+          if (tokenSupply != cached) {
+            setTokenSupply(cached);
+          }
         }
+      }
 
-        if (gameTokenCacheKey) {
-          const GameTokenState: any = drizzleState.contracts.GameToken;
-          let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenCacheKey] || 0.0;
+      console.log(gameTokenKey);
+      console.log(transactionId)
+      console.log(drizzleState.contracts.GameToken);
+
+      if(gameTokenKey != null) {
+        const GameTokenState: any = drizzleState.contracts.GameToken;
+
+        if (GameTokenState.getBalance.hasOwnProperty(gameTokenKey)) {
+
+          let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenKey] || 0.0;
+          cachedGameTokenBalance = parseInt(cachedGameTokenBalance.value);
           cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
-          setGameTokenBalance(cachedGameTokenBalance);
+          console.log(cachedGameTokenBalance);
+
+          if (cachedGameTokenBalance != gameTokenBalance) {
+            setGameTokenBalance(cachedGameTokenBalance);
+          }
         }
       }
     }
-  }, []);
-
-  if (initialized && gameTokenKey == null && gameTokenBalance != null) {
-    const GameToken: any = drizzle.contracts.GameToken;
-
-    const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
-      from: account
-    });
-
-    setGameTokenKey(gameTokenCacheKey);
-  }
+  });
 
   const buyToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
-    const GameToken = drizzle.contracts.GameToken;
 
     if (account) {
+      const GameToken = drizzle.contracts.GameToken;
+      const stackId: any = GameToken.methods["purchase"].cacheSend(account, 1, {
+        from: account
+      })
+
+      setTransactionId(stackId);
+    }
+  }
+
+  const sellToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
+
+    if (account) {
+      const GameToken = drizzle.contracts.GameToken;
+      setGameTokenKey(null);
+
       const stackId: any = GameToken.methods["sell"].cacheSend(account, 1, {
         from: account
       })
@@ -286,6 +360,13 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
           )
         }
         {
+          tokenSupply && (
+              <Typography>
+                <strong>Token Supply: {tokenSupply}</strong>
+              </Typography>
+          )
+        }
+        {
           gameTokenBalance && (
               <Typography>
                 <strong>🏦 Balance: {gameTokenBalance}</strong>
@@ -312,6 +393,9 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
           <form>
             <Button color="primary" variant="contained" fullWidth onClick={buyToken}>
               Buy Credits
+            </Button>
+            <Button color="primary" variant="contained" fullWidth onClick={sellToken}>
+              Sell Credits
             </Button>
           </form>
           </Container>
@@ -421,5 +505,3 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
 };
 
 export default Home;
-
-//const HomeContainer = drizzleConnect(Home, mapStateToProps);
