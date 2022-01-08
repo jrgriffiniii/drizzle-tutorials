@@ -14,12 +14,20 @@ const contractEventNotifier = (store: any) => {
         const txHash = action.txHash;
 
         console.log(txHash);
+        console.log(store);
       }
       return next(action);
     }
   }
 }
 
+/*
+const reducers: any = {
+  setTxHash: setTxHashReducer
+}
+
+const appReducers = [ reducers ]
+*/
 const appMiddlewares = [ contractEventNotifier ]
 
 export default generateStore({

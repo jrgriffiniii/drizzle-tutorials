@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useSelector } from 'react-redux'
+
 import logo from './logo.svg';
 
 import './App.css';
@@ -185,45 +187,59 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
   const [transactionId, setTransactionId] = useState<any | null>(null);
 
   useEffect(() => {
-    if (initialized && drizzleState.accounts && !account) {
+    if (!account && initialized && Object.keys(drizzleState.accounts).length > 0) {
+
       const primaryAccount: string = drizzleState.accounts[0];
       setAccount(primaryAccount);
-      // @todo Replace this
-      const Corn: any = drizzle.contracts.Commodity;
-
-      const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
-        from: primaryAccount 
-      });
-      setCornKey(cornCacheKey);
-
-      const GameToken: any = drizzle.contracts.GameToken;
-
-      const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(primaryAccount, {
-        from: primaryAccount
-      });
-      setGameTokenKey(gameTokenCacheKey);
 
       if (primaryAccount) {
-        let accountBalance: number = drizzleState.accountBalances[primaryAccount];
-        accountBalance = accountBalance*(0.1**18);
-        setBalance(accountBalance);
-      }
+        // @todo Replace this
+        const Corn: any = drizzle.contracts.Commodity;
 
-      if (cornCacheKey) {
-        let CornState: any = drizzleState.contracts.Commodity;
-        let cachedCornBalance: any = CornState.getBalance[cornCacheKey] || 0.0;
-        cachedCornBalance = cachedCornBalance.toFixed(14);
-        setCornBalance(cachedCornBalance);
-      }
+        const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
+          from: primaryAccount 
+        });
+        setCornKey(cornCacheKey);
 
-      if (gameTokenCacheKey) {
-        const GameTokenState: any = drizzleState.contracts.GameToken;
-        let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenCacheKey] || 0.0;
-        cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
-        setGameTokenBalance(cachedGameTokenBalance);
+        const GameToken: any = drizzle.contracts.GameToken;
+
+        const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(primaryAccount, {
+          from: primaryAccount
+        });
+        setGameTokenKey(gameTokenCacheKey);
+
+        if (primaryAccount) {
+          let accountBalance: number = drizzleState.accountBalances[primaryAccount];
+          accountBalance = accountBalance*(0.1**18);
+          setBalance(accountBalance);
+        }
+
+        if (cornCacheKey) {
+          let CornState: any = drizzleState.contracts.Commodity;
+          let cachedCornBalance: any = CornState.getBalance[cornCacheKey] || 0.0;
+          cachedCornBalance = cachedCornBalance.toFixed(14);
+          setCornBalance(cachedCornBalance);
+        }
+
+        if (gameTokenCacheKey) {
+          const GameTokenState: any = drizzleState.contracts.GameToken;
+          let cachedGameTokenBalance: any = GameTokenState.getBalance[gameTokenCacheKey] || 0.0;
+          cachedGameTokenBalance = cachedGameTokenBalance.toFixed(14);
+          setGameTokenBalance(cachedGameTokenBalance);
+        }
       }
     }
   }, []);
+
+  if (initialized && gameTokenKey == null && gameTokenBalance != null) {
+    const GameToken: any = drizzle.contracts.GameToken;
+
+    const gameTokenCacheKey = GameToken.methods["getBalance"].cacheCall(account, {
+      from: account
+    });
+
+    setGameTokenKey(gameTokenCacheKey);
+  }
 
   const buyToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
     const GameToken = drizzle.contracts.GameToken;
@@ -233,22 +249,15 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
         from: account
       })
 
-      console.log(stackId);
       setTransactionId(stackId);
     }
   }
 
   let transaction: any = null;
-
-  const transactionComplete: Function = () => {
-
-    if (transactionId) {
-      const { transactions, transactionStack } = drizzleState;
-      const txHash = transactionStack[transactionId]; 
-      if (txHash) {
-        transaction = transactions[txHash];
-      }
-    }
+  if (transactionId != null) {
+    const { transactions, transactionStack } = drizzleState;
+    const txHash = transactionStack[transactionId]; 
+    transaction = transactions[txHash];
   }
 
   return (
@@ -306,33 +315,36 @@ const Account: Function = ({ drizzle, drizzleState, initialized }: AccountProps)
             </Button>
           </form>
           </Container>
-          {
-            initialized && transactionId != null && transactionComplete() && (
               <Container>
+          {
+            initialized && transactionId != null && transaction != null && transaction.status == "success" && (
                 <Typography>
-                  Transaction: {transaction}
+                  Transaction: {transaction.receipt.transactionHash}
                 </Typography>
-              </Container>
             )
           }
           {
-            initialized && transactionId != null && (
-              <Container>
+            initialized && transactionId != null && transaction == null && (
                 <Typography>
                   Transaction in progress...
                 </Typography>
-              </Container>
             )
           }
           {
-            initialized && transactionId == null && (
-              <Container>
+            initialized && account && !transactionId && (
                 <Typography>
                   Please buy credits
                 </Typography>
-              </Container>
             )
           }
+          {
+            !initialized || !account && (
+                <Typography>
+                  Please connect your web wallet.
+                </Typography>
+            )
+          }
+              </Container>
       </CardActions>
     </Card>
   )
