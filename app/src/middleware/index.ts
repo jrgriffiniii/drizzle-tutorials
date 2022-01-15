@@ -1,5 +1,5 @@
-import { generateStore, EventActions } from '@drizzle/store'
-import drizzleOptions from '../drizzleOptions'
+import { generateStore, EventActions } from '@drizzle/store';
+import drizzleOptions from '../drizzleOptions';
 
 const contractEventNotifier = (store: any) => {
   return (next: any) => {
@@ -17,9 +17,9 @@ const contractEventNotifier = (store: any) => {
         console.log(store.getState());
       }
       return next(action);
-    }
-  }
-}
+    };
+  };
+};
 
 /*
 const reducers: any = {
@@ -28,10 +28,10 @@ const reducers: any = {
 
 const appReducers = [ reducers ]
 */
-const appMiddlewares = [ contractEventNotifier ]
+const appMiddlewares = [contractEventNotifier];
 
 export default generateStore({
   drizzleOptions,
   appMiddlewares,
-  disableReduxDevTools: false  // enable ReduxDevTools!
-})
+  disableReduxDevTools: false, // enable ReduxDevTools!
+});

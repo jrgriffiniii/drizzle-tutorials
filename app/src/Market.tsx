@@ -117,56 +117,62 @@ type MarketProps = {
   initialized: boolean;
 };
 
-const Market: Function = ({ drizzle, drizzleState, initialized }: MarketProps) => {
-    const classes = useStyles();
-    const products: any[] = [
-        {
-        name: '☕',
-        description: 'Coffee',
-        price: 1,
-        quantity: 1,
-        measurement: 'bushel',
-        gtin: '7-25272-73070-6',
-        },
-        {
-        name: '🌽',
-        description: 'Corn',
-        price: 1,
-        quantity: 1,
-        measurement: 'bushel',
-        gtin: '7-25272-73070-6',
-        },
-        {
-        name: '🍞',
-        description: 'Wheat',
-        price: 1,
-        quantity: 1,
-        measurement: 'bushel',
-        gtin: '7-25272-73070-6',
-        },
-        {
-        name: '🌾',
-        description: 'Rice',
-        price: 1,
-        quantity: 1,
-        measurement: 'bushel',
-        gtin: '7-25272-73070-6',
-        },
-    ];
+const Market: Function = ({
+  drizzle,
+  drizzleState,
+  initialized,
+}: MarketProps) => {
+  const classes = useStyles();
+  const products: any[] = [
+    {
+      name: '☕',
+      description: 'Coffee',
+      price: 1,
+      quantity: 1,
+      measurement: 'bushel',
+      gtin: '7-25272-73070-6',
+    },
+    {
+      name: '🌽',
+      description: 'Corn',
+      price: 1,
+      quantity: 1,
+      measurement: 'bushel',
+      gtin: '7-25272-73070-6',
+    },
+    {
+      name: '🍞',
+      description: 'Wheat',
+      price: 1,
+      quantity: 1,
+      measurement: 'bushel',
+      gtin: '7-25272-73070-6',
+    },
+    {
+      name: '🌾',
+      description: 'Rice',
+      price: 1,
+      quantity: 1,
+      measurement: 'bushel',
+      gtin: '7-25272-73070-6',
+    },
+  ];
 
-    return (
-        <Container maxWidth="sm">
-            <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-            >Commodities</Typography>
+  return (
+    <Container maxWidth="sm">
+      <Typography
+        component="h1"
+        variant="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+      >
+        Commodities
+      </Typography>
 
-            <Products products={products} />
-        </Container>
-    );
+      <Products products={products} />
+    </Container>
+  );
 };
 
 export default Market;

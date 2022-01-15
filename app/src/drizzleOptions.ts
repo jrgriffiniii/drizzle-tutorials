@@ -5,8 +5,8 @@ const options: any = {
   contracts: [GameToken, Commodity],
   web3: {
     fallback: {
-      type: "ws",
-      url: "ws://127.0.0.1:8545",
+      type: 'ws',
+      url: 'ws://127.0.0.1:8545',
     },
   },
   events: {},

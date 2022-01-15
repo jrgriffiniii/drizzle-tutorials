@@ -17,6 +17,6 @@
     "prettier:check": "yarn run prettier --check .",
     "prettier:write": "yarn run prettier --write .",
     "test:coverage": "yarn run truffle run coverage",
-    "test": "yarn migrate --reset && yarn run truffle test --network=test"
+    "test": "yarn run truffle test --network=test"
   }
 }

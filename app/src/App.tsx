@@ -5,16 +5,16 @@ import { Drizzle } from '@drizzle/store';
 import Home from './Home';
 
 import GameToken from './contracts/GameToken.json';
-import Commodity from './contracts/Commodity.json';
+import CornContract from './contracts/CornContract.json';
 
-import store from "./middleware";
+import store from './middleware';
 
 const drizzleOptions: any = {
-  contracts: [GameToken, Commodity],
+  contracts: [GameToken, CornContract],
   web3: {
     fallback: {
-      type: "ws",
-      url: "ws://127.0.0.1:8545",
+      type: 'ws',
+      url: 'ws://127.0.0.1:8545',
     },
   },
   events: {},

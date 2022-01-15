@@ -2,36 +2,56 @@
 
 pragma solidity ^0.8.7;
 
-contract Commodity {
-    uint public constant MAX_BALANCE = 10000;
+contract CommodityContract {
+    uint256 public constant MAX_BALANCE = 1000;
 
     address private deployed;
-    mapping (address => uint) balances;
+    mapping(address => uint256) balances;
+
+    event Received(address, uint256);
+    event Fallback(address, uint256);
 
     constructor() public {
-      deployed = address(this);
-      balances[tx.origin] = MAX_BALANCE;
+        deployed = address(this);
+        balances[deployed] = MAX_BALANCE;
     }
 
-    function getBalance(address owner) public view returns(uint) {
-      return balances[owner];
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
     }
 
-    function purchase(address buyer, uint amount) public returns(bool sufficient) {
-      if (balances[msg.sender] < amount) return false;
-      balances[msg.sender] -= amount;
-
-      balances[buyer] += amount;
-      return true;
+    fallback() external payable {
+        emit Fallback(msg.sender, msg.value);
     }
 
-    function sell(address seller, uint amount) public returns(bool sufficient) {
-      if (balances[seller] - amount < balances[seller]) return false;
-      balances[seller] -= amount;
+    function getDeposited() external view returns (uint256) {
+        return deployed.balance;
+    }
 
-      balances[seller] -= amount;
-      balances[msg.sender] += amount;
+    function getSupply() external view returns (uint256) {
+        return balances[deployed];
+    }
 
-      return true;
+    function getBalance(address owner) external view returns (uint256) {
+        return balances[owner];
+    }
+
+    function purchase() external payable {
+        address payable seller = payable(deployed);
+        uint256 amount = msg.value;
+
+        // This must be denominated in Wei
+        balances[deployed] -= amount;
+        balances[msg.sender] += amount;
+    }
+
+    function sell() external payable returns (uint256) {
+        address payable seller = payable(msg.sender);
+        uint256 amount = msg.value;
+
+        balances[deployed] += amount;
+        balances[msg.sender] -= amount;
+
+        return seller.balance;
     }
 }

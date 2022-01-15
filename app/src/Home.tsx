@@ -106,61 +106,11 @@ const Navbar: Function = () => {
   );
 };
 
-const Product: Function = ({
-  name,
-  description,
-  price,
-  gtin,
-}: ProductProps) => {
-  const classes = useStyles();
-
-  return (
-    <Grid item xs={12} sm={6}>
-      <Card className={classes.card}>
-        <CardContent className={classes.cardContent}>
-          <Typography variant="h5" component="h2">
-            {name}
-          </Typography>
-          <Typography variant="h5" component="h3">
-            {description}
-          </Typography>
-          <Typography>
-            <strong>Price:</strong> {price} Tokens
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.cardActions}>
-          <form>
-            <FormControl fullWidth>
-              <TextField label="Bushels" value="0" variant="outlined" />
-            </FormControl>
-            <Button color="primary" variant="contained" fullWidth>
-              Buy
-            </Button>
-            <Button color="secondary" variant="contained" disabled fullWidth>
-              Sell
-            </Button>
-          </form>
-        </CardActions>
-      </Card>
-    </Grid>
-  );
-};
-
-const Products: Function = ({ products }: ProductsProps) => {
-  const classes = useStyles();
-
-  return (
-    <Container className={classes.cardGrid} maxWidth="md">
-      <Grid container spacing={4}>
-        {products.map((productProps, key) => (
-          <Product key={key} {...productProps} />
-        ))}
-      </Grid>
-    </Container>
-  );
-};
-
-const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountProps) => {
+const AccountOld: Function = ({
+  drizzle,
+  drizzleState,
+  initialized,
+}: AccountProps) => {
   const [account, setAccount] = useState<string | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
 
@@ -179,8 +129,11 @@ const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountPro
   const [transactionStatus, setTransactionStatus] = useState<null | null>(null);
 
   useEffect(() => {
-
-    if (initialized && !account && Object.keys(drizzleState.accounts).length > 0) {
+    if (
+      initialized &&
+      !account &&
+      Object.keys(drizzleState.accounts).length > 0
+    ) {
       const primaryAccount: string = drizzleState.accounts[0];
       setAccount(primaryAccount);
 
@@ -195,15 +148,15 @@ const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountPro
         setCornKey(cornCacheKey);
         */
 
-        let accountBalance: number = drizzleState.accountBalances[primaryAccount];
-        accountBalance = accountBalance*(0.1**18);
+        let accountBalance: number =
+          drizzleState.accountBalances[primaryAccount];
+        accountBalance = accountBalance * 0.1 ** 18;
         setBalance(accountBalance);
       }
-    } else if(initialized && account) {
-
+    } else if (initialized && account) {
       if (transactionId != null && transactionHash == null) {
         const { transactions, transactionStack } = drizzleState;
-        const txHash = transactionStack[transactionId]; 
+        const txHash = transactionStack[transactionId];
         const cached = transactions[txHash];
 
         if (cached != null) {
@@ -219,10 +172,10 @@ const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountPro
 
       const GameTokenState: any = drizzleState.contracts.GameToken;
       const GameToken: any = drizzle.contracts.GameToken;
-      
-      if(tokenSupplyKey == null || tokenSupply == null) {
-        const key = GameToken.methods["getSupply"].cacheCall({
-          from: account
+
+      if (tokenSupplyKey == null || tokenSupply == null) {
+        const key = GameToken.methods['getSupply'].cacheCall({
+          from: account,
         });
 
         if (GameTokenState.getSupply.hasOwnProperty(key)) {
@@ -237,9 +190,9 @@ const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountPro
         }
       }
 
-      if(gameTokenKey == null || gameTokenBalance == null) {
-        const key = GameToken.methods["getBalance"].cacheCall(account, {
-          from: account
+      if (gameTokenKey == null || gameTokenBalance == null) {
+        const key = GameToken.methods['getBalance'].cacheCall(account, {
+          from: account,
         });
 
         if (GameTokenState.getBalance.hasOwnProperty(key)) {
@@ -256,140 +209,128 @@ const AccountOld: Function = ({ drizzle, drizzleState, initialized }: AccountPro
     }
   });
 
-  const buyToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
+  const buyToken: any = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     if (account) {
       const GameToken = drizzle.contracts.GameToken;
 
-      const stackId: any = GameToken.methods["purchase"].cacheSend(account, 1, {
-        from: account
-      })
+      const stackId: any = GameToken.methods['purchase'].cacheSend(account, 1, {
+        from: account,
+      });
 
       setGameTokenKey(null);
       setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
-  }
+  };
 
-  const sellToken: any = (event: React.MouseEvent<HTMLElement, MouseEvent>): void => {
-
+  const sellToken: any = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ): void => {
     if (account) {
       const GameToken = drizzle.contracts.GameToken;
       setGameTokenKey(null);
 
-      const stackId: any = GameToken.methods["sell"].cacheSend(account, 1, {
-        from: account
-      })
+      const stackId: any = GameToken.methods['sell'].cacheSend(account, 1, {
+        from: account,
+      });
 
       setGameTokenKey(null);
       setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
-  }
+  };
 
   return (
     <Card>
-      <CardContent >
+      <CardContent>
         <Typography
           variant="h4"
           component="h2"
           align="center"
           color="textPrimary"
           gutterBottom
-        >My Account
+        >
+          My Account
         </Typography>
-        {
-          account && (
-              <Typography>
-                <strong>Account: {account}</strong>
-              </Typography>
-          )
-        }
-        {
-          balance && (
-              <Typography>
-                <strong>Ξ Balance: {balance}</strong>
-              </Typography>
-          )
-        }
-        {
-          tokenSupply && (
-              <Typography>
-                <strong>Token Supply: {tokenSupply}</strong>
-              </Typography>
-          )
-        }
-        {
-          gameTokenBalance && (
-              <Typography>
-                <strong>🏦 Balance: {gameTokenBalance}</strong>
-              </Typography>
-          )
-        }
-        {
-          cornBalance && (
-              <Typography>
-                <strong>🌽 Balance: {cornBalance}</strong>
-              </Typography>
-          )
-        }
-        {
-          !initialized && (
-            <Typography>
-              <strong>Please connect with your web wallet.</strong>
-            </Typography>
-          )
-        }
+        {account && (
+          <Typography>
+            <strong>Account: {account}</strong>
+          </Typography>
+        )}
+        {balance && (
+          <Typography>
+            <strong>Ξ Balance: {balance}</strong>
+          </Typography>
+        )}
+        {tokenSupply && (
+          <Typography>
+            <strong>Token Supply: {tokenSupply}</strong>
+          </Typography>
+        )}
+        {gameTokenBalance && (
+          <Typography>
+            <strong>🏦 Balance: {gameTokenBalance}</strong>
+          </Typography>
+        )}
+        {cornBalance && (
+          <Typography>
+            <strong>🌽 Balance: {cornBalance}</strong>
+          </Typography>
+        )}
+        {!initialized && (
+          <Typography>
+            <strong>Please connect with your web wallet.</strong>
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
-          <Container>
+        <Container>
           <form>
-            <Button color="primary" variant="contained" fullWidth onClick={buyToken}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              onClick={buyToken}
+            >
               Buy Credits
             </Button>
-            <Button color="primary" variant="contained" fullWidth onClick={sellToken}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              onClick={sellToken}
+            >
               Sell Credits
             </Button>
           </form>
-          </Container>
-              <Container>
-          {
-            initialized && transactionId != null && transaction != null && (
-                <>
-                  <Typography>
-                    Transaction Hash: {transactionHash}
-                  </Typography>
-                  <Typography>
-                    Transaction Status: {transactionStatus}
-                  </Typography>
-                </>
-            )
-          }
-          {
-            initialized && transactionId != null && transaction == null && (
-                <Typography>
-                  Transaction in progress...
-                </Typography>
-            )
-          }
-          {
-            initialized && account && (gameTokenBalance == null && transactionId == null) && (
-                <Typography>
-                  Please buy credits
-                </Typography>
-            )
-          }
-          {
-            !initialized || !account && (
-                <Typography>
-                  Please connect your web wallet.
-                </Typography>
-            )
-          }
-              </Container>
+        </Container>
+        <Container>
+          {initialized && transactionId != null && transaction != null && (
+            <>
+              <Typography>Transaction Hash: {transactionHash}</Typography>
+              <Typography>Transaction Status: {transactionStatus}</Typography>
+            </>
+          )}
+          {initialized && transactionId != null && transaction == null && (
+            <Typography>Transaction in progress...</Typography>
+          )}
+          {initialized &&
+            account &&
+            gameTokenBalance == null &&
+            transactionId == null && (
+              <Typography>Please buy credits</Typography>
+            )}
+          {!initialized ||
+            (!account && (
+              <Typography>Please connect your web wallet.</Typography>
+            ))}
+        </Container>
       </CardActions>
     </Card>
-  )
-}
+  );
+};
 
 const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
   const classes = useStyles();
@@ -435,15 +376,21 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
 
       <main>
         <Container maxWidth="sm">
-          { initialized && (
-              <Account drizzle={drizzle} drizzleState={drizzleState} initialized={initialized} />
-            )
-          }
+          {initialized && (
+            <Account
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              initialized={initialized}
+            />
+          )}
 
-          { initialized && (
-              <Exchange drizzle={drizzle} drizzleState={drizzleState} initialized={initialized} />
-            )
-          }
+          {initialized && (
+            <Exchange
+              drizzle={drizzle}
+              drizzleState={drizzleState}
+              initialized={initialized}
+            />
+          )}
 
           <Market />
         </Container>

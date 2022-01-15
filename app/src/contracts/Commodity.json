@@ -1179,9 +1179,7 @@
   "ast": {
     "absolutePath": "project:/contracts/Commodity.sol",
     "exportedSymbols": {
-      "Commodity": [
-        118
-      ]
+      "Commodity": [118]
     },
     "id": 119,
     "license": "MIT",
@@ -1189,12 +1187,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -1205,9 +1198,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 118,
-        "linearizedBaseContracts": [
-          118
-        ],
+        "linearizedBaseContracts": [118],
         "name": "Commodity",
         "nameLocation": "67:9:0",
         "nodeType": "ContractDefinition",
@@ -2582,9 +2573,7 @@
   "legacyAST": {
     "absolutePath": "project:/contracts/Commodity.sol",
     "exportedSymbols": {
-      "Commodity": [
-        118
-      ]
+      "Commodity": [118]
     },
     "id": 119,
     "license": "MIT",
@@ -2592,12 +2581,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -2608,9 +2592,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 118,
-        "linearizedBaseContracts": [
-          118
-        ],
+        "linearizedBaseContracts": [118],
         "name": "Commodity",
         "nameLocation": "67:9:0",
         "nodeType": "ContractDefinition",
@@ -4001,7 +3983,7 @@
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-08T21:23:53.792Z",
+  "updatedAt": "2022-01-15T16:45:42.392Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
