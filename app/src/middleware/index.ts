@@ -16,6 +16,7 @@ const contractEventNotifier = (store: any) => {
         console.log(txHash);
         console.log(store.getState());
       }
+
       return next(action);
     };
   };

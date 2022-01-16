@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import ShopIcon from '@material-ui/icons/Shop';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
 
 type ExchangeProps = {
   drizzle: any;
@@ -31,8 +21,8 @@ const Exchange: Function = ({
   const [account, setAccount] = useState<string | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
 
-  const [cornKey, setCornKey] = useState<string | null>(null);
-  const [cornBalance, setCornBalance] = useState<string | null>(null);
+  const [cornContractKey, setCornContractKey] = useState<string | null>(null);
+  const [cornContractBalance, setCornContractBalance] = useState<string | null>(null);
 
   const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
   const [tokenSupply, setTokenSupply] = useState<string | null>(null);
@@ -51,38 +41,32 @@ const Exchange: Function = ({
   const [transactionStatus, setTransactionStatus] = useState<null | null>(null);
 
   useEffect(() => {
-    if (
-      initialized &&
-      !account &&
-      Object.keys(drizzleState.accounts).length > 0
-    ) {
+    const walletConnected: boolean = initialized && !account && Object.keys(drizzleState.accounts).length > 0;
+
+    if (walletConnected) {
+      // If the wallet is connected for the first time, store the account
       const primaryAccount: string = drizzleState.accounts[0];
       setAccount(primaryAccount);
 
       if (primaryAccount) {
-        // @todo Replace this
-        /*
-          const Corn: any = drizzle.contracts.Commodity;
-  
-          const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
-            from: primaryAccount 
-          });
-          setCornKey(cornCacheKey);
-          */
+        console.log(primaryAccount);
 
         let accountBalance: number =
           drizzleState.accountBalances[primaryAccount];
         accountBalance = accountBalance * 0.1 ** 18;
         setBalance(accountBalance);
+        console.log(primaryAccount);
       }
     } else if (initialized && account) {
+
+      // This handles the state for the interactions between the Ethereum network, contracts, and React
       if (transactionId != null && transactionHash == null) {
         const { transactions, transactionStack } = drizzleState;
         const txHash = transactionStack[transactionId];
         const cached = transactions[txHash];
 
+        // This retrieves any cached transactions
         if (cached != null) {
-          console.log(cached);
           setTransaction(cached);
           setTransactionStatus(cached.status);
 
@@ -92,9 +76,15 @@ const Exchange: Function = ({
         }
       }
 
+      // Retrieve the GameToken state and contracts
       const GameTokenState: any = drizzleState.contracts.GameToken;
       const GameToken: any = drizzle.contracts.GameToken;
 
+      // Retrieve the CornContract state and contracts
+      //const CornContractState: any = drizzleState.contracts.CornContract;
+      //const CornContract: any = drizzle.contracts.CornContract;
+
+      // This retrieves the number of ETH deposited into the exchange
       if (exchangeReservesKey == null || exchangeReserves == null) {
         const key = GameToken.methods['getDeposited'].cacheCall({
           from: account,
@@ -102,8 +92,6 @@ const Exchange: Function = ({
 
         if (GameTokenState.getSupply.hasOwnProperty(key)) {
           let cached: any = GameTokenState.getDeposited[key] || 0.0;
-          console.log(cached);
-          //cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
           if (tokenSupply != cached) {
@@ -113,6 +101,7 @@ const Exchange: Function = ({
         }
       }
 
+      // This retrieves the number of tokens owned by the exchange
       if (tokenSupplyKey == null || tokenSupply == null) {
         const key = GameToken.methods['getSupply'].cacheCall({
           from: account,
@@ -130,6 +119,7 @@ const Exchange: Function = ({
         }
       }
 
+      // This retrieves the amount of tokens owned by the user
       if (gameTokenKey == null || gameTokenBalance == null) {
         const key = GameToken.methods['getBalance'].cacheCall(account, {
           from: account,
@@ -146,6 +136,26 @@ const Exchange: Function = ({
           }
         }
       }
+
+      // This retrieves the amount of corn contracts owned by the user
+      if (cornContractKey == null || cornContractBalance == null) {
+        /*
+        const key = CornContract.methods['getBalance'].cacheCall(account, {
+          from: account,
+        });
+
+        if (GameTokenState.getBalance.hasOwnProperty(key)) {
+          let cached: any = GameTokenState.getBalance[key] || 0.0;
+          cached = parseInt(cached.value);
+          cached = cached.toFixed(14);
+
+          if (cached != gameTokenBalance) {
+            setGameTokenBalance(cached);
+            setGameTokenKey(key);
+          }
+        }
+        */
+      }
     }
   });
 
@@ -153,11 +163,11 @@ const Exchange: Function = ({
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ): void => {
     if (account) {
-      console.log(drizzleState);
       const GameToken = drizzle.contracts.GameToken;
-
-      // @todo Fix this
+      // @todo this should be a variable
       const creditAmount: number = 1;
+
+      // This submits a transaction to purchase a token from the exchange
       const stackId: any = GameToken.methods['receive'].cacheSend({
         from: account,
         value: creditAmount,
@@ -174,9 +184,10 @@ const Exchange: Function = ({
   ): void => {
     if (account) {
       const GameToken = drizzle.contracts.GameToken;
-      setGameTokenKey(null);
+      // @todo this should be a variable
+      const creditAmount: number = 1;
 
-      const stackId: any = GameToken.methods['sell'].cacheSend(account, 1, {
+      const stackId: any = GameToken.methods['sell'].cacheSend(account, creditAmount, {
         from: account,
       });
 

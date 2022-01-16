@@ -1,8 +1,9 @@
 import GameToken from './contracts/GameToken.json';
 import Commodity from './contracts/Commodity.json';
+import CornContract from './contracts/CornContract.json';
 
 const options: any = {
-  contracts: [GameToken, Commodity],
+  contracts: [GameToken, Commodity, CornContract],
   web3: {
     fallback: {
       type: 'ws',

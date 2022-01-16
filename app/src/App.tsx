@@ -10,7 +10,7 @@ import CornContract from './contracts/CornContract.json';
 import store from './middleware';
 
 const drizzleOptions: any = {
-  contracts: [GameToken, CornContract],
+  contracts: [GameToken],
   web3: {
     fallback: {
       type: 'ws',
