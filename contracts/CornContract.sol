@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.7;
 
-import "../contracts/Commodity.sol";
+import "../contracts/CommodityContract.sol";
 
 contract CornContract is CommodityContract {
 

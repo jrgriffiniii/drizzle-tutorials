@@ -1,5 +1,5 @@
 const GameToken = artifacts.require("GameToken");
-const CommodityContract = artifacts.require("Commodity");
+const CommodityContract = artifacts.require("CommodityContract");
 const CornContract = artifacts.require("CornContract");
 
 module.exports = async function (deployer, network, accounts) {

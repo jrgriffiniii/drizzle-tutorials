@@ -53,31 +53,24 @@ const Account: Function = ({
     ) {
       const primaryAccount: string = drizzleState.accounts[0];
       setAccount(primaryAccount);
+    } else if (initialized && account) {
 
-      if (primaryAccount) {
-        // @todo Replace this
-        /*
-          const Corn: any = drizzle.contracts.Commodity;
-  
-          const cornCacheKey: string = Corn.methods["getBalance"].cacheCall(primaryAccount, {
-            from: primaryAccount 
-          });
-          setCornKey(cornCacheKey);
-          */
-
+      if (balance == null) {
         let accountBalance: number =
-          drizzleState.accountBalances[primaryAccount];
+          drizzleState.accountBalances[account];
+
+        // Account balances are normally denominated in Wei
         accountBalance = accountBalance * 0.1 ** 18;
+
         setBalance(accountBalance);
       }
-    } else if (initialized && account) {
+
       if (transactionId != null && transactionHash == null) {
         const { transactions, transactionStack } = drizzleState;
         const txHash = transactionStack[transactionId];
         const cached = transactions[txHash];
 
         if (cached != null) {
-          console.log(cached);
           setTransaction(cached);
           setTransactionStatus(cached.status);
 
@@ -126,44 +119,10 @@ const Account: Function = ({
     }
   });
 
-  const buyToken: any = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    if (account) {
-      const GameToken = drizzle.contracts.GameToken;
-
-      const stackId: any = GameToken.methods['purchase'].cacheSend(account, 1, {
-        from: account,
-      });
-
-      setGameTokenKey(null);
-      setTokenSupplyKey(null);
-      setTransactionId(stackId);
-    }
-  };
-
-  const sellToken: any = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    if (account) {
-      const GameToken = drizzle.contracts.GameToken;
-      setGameTokenKey(null);
-
-      const stackId: any = GameToken.methods['sell'].cacheSend(account, 1, {
-        from: account,
-      });
-
-      setGameTokenKey(null);
-      setTokenSupplyKey(null);
-      setTransactionId(stackId);
-    }
-  };
-
   return (
-    <Card>
-      <CardContent>
+    <>
         <Typography
-          variant="h4"
+          variant="h3"
           component="h2"
           align="center"
           color="textPrimary"
@@ -171,12 +130,14 @@ const Account: Function = ({
         >
           My Account
         </Typography>
+      <Card>
+      <CardContent>
         {account && (
           <Typography>
             <strong>Account: {account}</strong>
           </Typography>
         )}
-        {balance && (
+        {balance != null && (
           <Typography>
             <strong>Ξ Balance: {balance}</strong>
           </Typography>
@@ -186,6 +147,11 @@ const Account: Function = ({
             <strong>Credit Balance: {gameTokenBalance}</strong>
           </Typography>
         )}
+        {!account && (
+          <Typography>
+            <strong>Please select an account with your web wallet.</strong>
+          </Typography>
+        )}
         {!initialized && (
           <Typography>
             <strong>Please connect with your web wallet.</strong>
@@ -193,6 +159,7 @@ const Account: Function = ({
         )}
       </CardContent>
     </Card>
+    </>
   );
 };
 

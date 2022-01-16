@@ -134,9 +134,9 @@
       "payable": true
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"Fallback\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"Received\",\"type\":\"event\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"MAX_BALANCE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"getBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDeposited\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"purchase\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"sell\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CornContract.sol\":\"CornContract\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Commodity.sol\":{\"keccak256\":\"0x7e3853604df1b62a26d60463e59982b3525933dfda7a3601b76c9abe6e3e2513\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f55744cb72e09d7340d335b64b968c3631a8e02e74b37309e5914f99b7e4c4a5\",\"dweb:/ipfs/QmVH6u8D42BUbjnGjFSeX12QHLeXAooe9nYQPyoWZ8Qvow\"]},\"project:/contracts/CornContract.sol\":{\"keccak256\":\"0x3a62bf3fbaa5849d930b0402c083966fc052605c0426a586dfa5b72745f69eaa\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8f904ee9a10d805b3779b6bc45ca35492991c7c66609d4ad9dd267de4f8acb52\",\"dweb:/ipfs/QmeUqnKG5FhSvt3pBGoDXdpyhkuAx7NhSbbz9zmwva5b7s\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50600080546001600160a01b03191630908117825581526001602052604090206103e890556102f1806100446000396000f3fe6080604052600436106100595760003560e01c80631387c4fd146100ce57806345710074146100fb57806364edfbf0146101035780636c9c2faf1461010d578063def92c6914610138578063f8b2cb4f1461014e57610099565b3661009957604080513381523460208201527f88a5966d370b9919b20f3e2c13ff65706f196a4e32cc2c12bf57088f8852587491015b60405180910390a1005b604080513381523460208201527ffbf15a1bae5e021d024841007b692b167afd2a281a4ff0b44f47387eb388205c910161008f565b3480156100da57600080fd5b506000546001600160a01b0316315b60405190815260200160405180910390f35b6100e9610184565b61010b6101eb565b005b34801561011957600080fd5b50600080546001600160a01b03168152600160205260409020546100e9565b34801561014457600080fd5b506100e96103e881565b34801561015a57600080fd5b506100e9610169366004610246565b6001600160a01b031660009081526001602052604090205490565b600080546001600160a01b0316815260016020526040812080543391349182919085906101b2908490610276565b909155505033600090815260016020526040812080548392906101d690849061028e565b9091555050506001600160a01b031631919050565b600080546001600160a01b03168082526001602052604082208054919234928392919061021990849061028e565b9091555050336000908152600160205260408120805483929061023d908490610276565b90915550505050565b60006020828403121561025857600080fd5b81356001600160a01b038116811461026f57600080fd5b9392505050565b60008219821115610289576102896102a5565b500190565b6000828210156102a0576102a06102a5565b500390565b634e487b7160e01b600052601160045260246000fdfea264697066735822122055044f9e53f9f7b3014b0b038bf7ca7099567604bef3d4e5b70bef37b01a672d64736f6c63430008070033",
-  "deployedBytecode": "0x6080604052600436106100595760003560e01c80631387c4fd146100ce57806345710074146100fb57806364edfbf0146101035780636c9c2faf1461010d578063def92c6914610138578063f8b2cb4f1461014e57610099565b3661009957604080513381523460208201527f88a5966d370b9919b20f3e2c13ff65706f196a4e32cc2c12bf57088f8852587491015b60405180910390a1005b604080513381523460208201527ffbf15a1bae5e021d024841007b692b167afd2a281a4ff0b44f47387eb388205c910161008f565b3480156100da57600080fd5b506000546001600160a01b0316315b60405190815260200160405180910390f35b6100e9610184565b61010b6101eb565b005b34801561011957600080fd5b50600080546001600160a01b03168152600160205260409020546100e9565b34801561014457600080fd5b506100e96103e881565b34801561015a57600080fd5b506100e9610169366004610246565b6001600160a01b031660009081526001602052604090205490565b600080546001600160a01b0316815260016020526040812080543391349182919085906101b2908490610276565b909155505033600090815260016020526040812080548392906101d690849061028e565b9091555050506001600160a01b031631919050565b600080546001600160a01b03168082526001602052604082208054919234928392919061021990849061028e565b9091555050336000908152600160205260408120805483929061023d908490610276565b90915550505050565b60006020828403121561025857600080fd5b81356001600160a01b038116811461026f57600080fd5b9392505050565b60008219821115610289576102896102a5565b500190565b6000828210156102a0576102a06102a5565b500390565b634e487b7160e01b600052601160045260246000fdfea264697066735822122055044f9e53f9f7b3014b0b038bf7ca7099567604bef3d4e5b70bef37b01a672d64736f6c63430008070033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"Fallback\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"Received\",\"type\":\"event\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[],\"name\":\"MAX_BALANCE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"getBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getDeposited\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"purchase\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"sell\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CornContract.sol\":\"CornContract\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/CommodityContract.sol\":{\"keccak256\":\"0x7e3853604df1b62a26d60463e59982b3525933dfda7a3601b76c9abe6e3e2513\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f55744cb72e09d7340d335b64b968c3631a8e02e74b37309e5914f99b7e4c4a5\",\"dweb:/ipfs/QmVH6u8D42BUbjnGjFSeX12QHLeXAooe9nYQPyoWZ8Qvow\"]},\"project:/contracts/CornContract.sol\":{\"keccak256\":\"0x452a15defe3ecc1b2578cdd15e4ccc7a43f7c086fb2f2c3ba68641dc224e6a81\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8dcc4cb2b4f04233e2371a45b4cd7fce54de0f11e39bf81771e18f9df7374092\",\"dweb:/ipfs/QmQSaNQHFGjCMyEm7SL2KNH6F9eAFPG6hC5nJP9uHnKNzq\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50600080546001600160a01b03191630908117825581526001602052604090206103e890556102f1806100446000396000f3fe6080604052600436106100595760003560e01c80631387c4fd146100ce57806345710074146100fb57806364edfbf0146101035780636c9c2faf1461010d578063def92c6914610138578063f8b2cb4f1461014e57610099565b3661009957604080513381523460208201527f88a5966d370b9919b20f3e2c13ff65706f196a4e32cc2c12bf57088f8852587491015b60405180910390a1005b604080513381523460208201527ffbf15a1bae5e021d024841007b692b167afd2a281a4ff0b44f47387eb388205c910161008f565b3480156100da57600080fd5b506000546001600160a01b0316315b60405190815260200160405180910390f35b6100e9610184565b61010b6101eb565b005b34801561011957600080fd5b50600080546001600160a01b03168152600160205260409020546100e9565b34801561014457600080fd5b506100e96103e881565b34801561015a57600080fd5b506100e9610169366004610246565b6001600160a01b031660009081526001602052604090205490565b600080546001600160a01b0316815260016020526040812080543391349182919085906101b2908490610276565b909155505033600090815260016020526040812080548392906101d690849061028e565b9091555050506001600160a01b031631919050565b600080546001600160a01b03168082526001602052604082208054919234928392919061021990849061028e565b9091555050336000908152600160205260408120805483929061023d908490610276565b90915550505050565b60006020828403121561025857600080fd5b81356001600160a01b038116811461026f57600080fd5b9392505050565b60008219821115610289576102896102a5565b500190565b6000828210156102a0576102a06102a5565b500390565b634e487b7160e01b600052601160045260246000fdfea2646970667358221220064429873047f2f3ac61fc0590bcacce30a0869758eed6b5487d264b6fe3c0dd64736f6c63430008070033",
+  "deployedBytecode": "0x6080604052600436106100595760003560e01c80631387c4fd146100ce57806345710074146100fb57806364edfbf0146101035780636c9c2faf1461010d578063def92c6914610138578063f8b2cb4f1461014e57610099565b3661009957604080513381523460208201527f88a5966d370b9919b20f3e2c13ff65706f196a4e32cc2c12bf57088f8852587491015b60405180910390a1005b604080513381523460208201527ffbf15a1bae5e021d024841007b692b167afd2a281a4ff0b44f47387eb388205c910161008f565b3480156100da57600080fd5b506000546001600160a01b0316315b60405190815260200160405180910390f35b6100e9610184565b61010b6101eb565b005b34801561011957600080fd5b50600080546001600160a01b03168152600160205260409020546100e9565b34801561014457600080fd5b506100e96103e881565b34801561015a57600080fd5b506100e9610169366004610246565b6001600160a01b031660009081526001602052604090205490565b600080546001600160a01b0316815260016020526040812080543391349182919085906101b2908490610276565b909155505033600090815260016020526040812080548392906101d690849061028e565b9091555050506001600160a01b031631919050565b600080546001600160a01b03168082526001602052604082208054919234928392919061021990849061028e565b9091555050336000908152600160205260408120805483929061023d908490610276565b90915550505050565b60006020828403121561025857600080fd5b81356001600160a01b038116811461026f57600080fd5b9392505050565b60008219821115610289576102896102a5565b500190565b6000828210156102a0576102a06102a5565b500390565b634e487b7160e01b600052601160045260246000fdfea2646970667358221220064429873047f2f3ac61fc0590bcacce30a0869758eed6b5487d264b6fe3c0dd64736f6c63430008070033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [
@@ -1072,9 +1072,9 @@
       "name": "#utility.yul"
     }
   ],
-  "sourceMap": "96:47:1:-:0;;;;;;;;;;;;-1:-1:-1;321:8:0;:24;;-1:-1:-1;;;;;;321:24:0;340:4;321:24;;;;;355:18;;321:24;355:18;;;;;129:4;355:32;;96:47:1;;;;;;",
-  "deployedSourceMap": "96:47:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;442:31:0;;;451:10;479:51:4;;463:9:0;561:2:4;546:18;;539:34;442:31:0;;452:18:4;442:31:0;;;;;;;;96:47:1;;529:31:0;;;538:10;479:51:4;;550:9:0;561:2:4;546:18;;539:34;529:31:0;;452:18:4;529:31:0;305:274:4;573:96:0;;;;;;;;;;-1:-1:-1;620:7:0;646:8;-1:-1:-1;;;;;646:8:0;:16;573:96;;;730:25:4;;;718:2;703:18;573:96:0;;;;;;;1148:259;;;:::i;888:254::-;;;:::i;:::-;;675:95;;;;;;;;;;-1:-1:-1;719:7:0;754:8;;-1:-1:-1;;;;;754:8:0;745:18;;:8;:18;;;;;;675:95;;91:42;;;;;;;;;;;;129:4;91:42;;776:106;;;;;;;;;;-1:-1:-1;776:106:0;;;;;:::i;:::-;-1:-1:-1;;;;;860:15:0;834:7;860:15;;;:8;:15;;;;;;;776:106;1148:259;1190:7;1309:8;;-1:-1:-1;;;;;1309:8:0;1300:18;;:8;:18;;;;;:28;;1242:10;;1280:9;;;;1300:18;1190:7;;1300:28;;1280:9;;1300:28;:::i;:::-;;;;-1:-1:-1;;1347:10:0;1338:20;;;;:8;:20;;;;;:30;;1362:6;;1338:20;:30;;1362:6;;1338:30;:::i;:::-;;;;-1:-1:-1;;;;;;;;1386:14:0;;;1148:259;-1:-1:-1;1148:259:0:o;888:254::-;935:22;968:8;;-1:-1:-1;;;;;968:8:0;1067:18;;;968:8;1067:18;;;;;:28;;968:8;;1004:9;;;;1067:18;935:22;1067:28;;1004:9;;1067:28;:::i;:::-;;;;-1:-1:-1;;1114:10:0;1105:20;;;;:8;:20;;;;;:30;;1129:6;;1105:20;:30;;1129:6;;1105:30;:::i;:::-;;;;-1:-1:-1;;;;888:254:0:o;14:286:4:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:4;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:4:o;766:128::-;806:3;837:1;833:6;830:1;827:13;824:39;;;843:18;;:::i;:::-;-1:-1:-1;879:9:4;;766:128::o;899:125::-;939:4;967:1;964;961:8;958:34;;;972:18;;:::i;:::-;-1:-1:-1;1009:9:4;;899:125::o;1029:127::-;1090:10;1085:3;1081:20;1078:1;1071:31;1121:4;1118:1;1111:15;1145:4;1142:1;1135:15",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.7;\n\nimport \"../contracts/Commodity.sol\";\n\ncontract CornContract is CommodityContract {\n\n}\n\n/*\ncontract CornContract is VRFConsumerBase, CommodityContract {\n\n  bytes32 private s_keyHash;\n  uint256 private s_fee;\n  mapping(bytes32 => address) private s_rollers;\n  mapping(address => uint256) private s_results;\n\n  // constructor\n  constructor(address vrfCoordinator, address link, bytes32 keyHash, uint256 fee)\n    public\n    VRFConsumerBase(vrfCoordinator, link)\n  {\n    s_keyHash = keyHash;\n    s_fee = fee;\n  }\n\n  // Get Price\n  function rollDice(address roller) public onlyOwner returns (bytes32 requestId) {\n    // checking LINK balance\n    require(LINK.balanceOf(address(this)) >= s_fee, \"Not enough LINK to pay fee\");\n\n    // checking if roller has already rolled die\n    require(s_results[roller] == 0, \"Already rolled\");\n\n    // requesting randomness\n    requestId = requestRandomness(s_keyHash, s_fee);\n\n    // storing requestId and roller address\n    s_rollers[requestId] = roller;\n\n    // emitting event to signal rolling of die\n    s_results[roller] = ROLL_IN_PROGRESS;\n    emit DiceRolled(requestId, roller);\n  }\n\n  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {\n    uint256 d20Value = randomness.mod(20).add(1);\n    s_results[s_rollers[requestId]] = d20Value;\n    emit DiceLanded(requestId, d20Value);\n  }\n\n  function house(address player) public view returns (string memory) {\n    require(s_results[player] != 0, \"Dice not rolled\");\n    require(s_results[player] != ROLL_IN_PROGRESS, \"Roll in progress\");\n    return getHouseName(s_results[player]);\n  }\n}\n*/\n",
+  "sourceMap": "104:47:1:-:0;;;;;;;;;;;;-1:-1:-1;321:8:0;:24;;-1:-1:-1;;;;;;321:24:0;340:4;321:24;;;;;355:18;;321:24;355:18;;;;;129:4;355:32;;104:47:1;;;;;;",
+  "deployedSourceMap": "104:47:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;442:31:0;;;451:10;479:51:4;;463:9:0;561:2:4;546:18;;539:34;442:31:0;;452:18:4;442:31:0;;;;;;;;104:47:1;;529:31:0;;;538:10;479:51:4;;550:9:0;561:2:4;546:18;;539:34;529:31:0;;452:18:4;529:31:0;305:274:4;573:96:0;;;;;;;;;;-1:-1:-1;620:7:0;646:8;-1:-1:-1;;;;;646:8:0;:16;573:96;;;730:25:4;;;718:2;703:18;573:96:0;;;;;;;1148:259;;;:::i;888:254::-;;;:::i;:::-;;675:95;;;;;;;;;;-1:-1:-1;719:7:0;754:8;;-1:-1:-1;;;;;754:8:0;745:18;;:8;:18;;;;;;675:95;;91:42;;;;;;;;;;;;129:4;91:42;;776:106;;;;;;;;;;-1:-1:-1;776:106:0;;;;;:::i;:::-;-1:-1:-1;;;;;860:15:0;834:7;860:15;;;:8;:15;;;;;;;776:106;1148:259;1190:7;1309:8;;-1:-1:-1;;;;;1309:8:0;1300:18;;:8;:18;;;;;:28;;1242:10;;1280:9;;;;1300:18;1190:7;;1300:28;;1280:9;;1300:28;:::i;:::-;;;;-1:-1:-1;;1347:10:0;1338:20;;;;:8;:20;;;;;:30;;1362:6;;1338:20;:30;;1362:6;;1338:30;:::i;:::-;;;;-1:-1:-1;;;;;;;;1386:14:0;;;1148:259;-1:-1:-1;1148:259:0:o;888:254::-;935:22;968:8;;-1:-1:-1;;;;;968:8:0;1067:18;;;968:8;1067:18;;;;;:28;;968:8;;1004:9;;;;1067:18;935:22;1067:28;;1004:9;;1067:28;:::i;:::-;;;;-1:-1:-1;;1114:10:0;1105:20;;;;:8;:20;;;;;:30;;1129:6;;1105:20;:30;;1129:6;;1105:30;:::i;:::-;;;;-1:-1:-1;;;;888:254:0:o;14:286:4:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:4;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:4:o;766:128::-;806:3;837:1;833:6;830:1;827:13;824:39;;;843:18;;:::i;:::-;-1:-1:-1;879:9:4;;766:128::o;899:125::-;939:4;967:1;964;961:8;958:34;;;972:18;;:::i;:::-;-1:-1:-1;1009:9:4;;899:125::o;1029:127::-;1090:10;1085:3;1081:20;1078:1;1071:31;1121:4;1118:1;1111:15;1145:4;1142:1;1135:15",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.7;\n\nimport \"../contracts/CommodityContract.sol\";\n\ncontract CornContract is CommodityContract {\n\n}\n\n/*\ncontract CornContract is VRFConsumerBase, CommodityContract {\n\n  bytes32 private s_keyHash;\n  uint256 private s_fee;\n  mapping(bytes32 => address) private s_rollers;\n  mapping(address => uint256) private s_results;\n\n  // constructor\n  constructor(address vrfCoordinator, address link, bytes32 keyHash, uint256 fee)\n    public\n    VRFConsumerBase(vrfCoordinator, link)\n  {\n    s_keyHash = keyHash;\n    s_fee = fee;\n  }\n\n  // Get Price\n  function rollDice(address roller) public onlyOwner returns (bytes32 requestId) {\n    // checking LINK balance\n    require(LINK.balanceOf(address(this)) >= s_fee, \"Not enough LINK to pay fee\");\n\n    // checking if roller has already rolled die\n    require(s_results[roller] == 0, \"Already rolled\");\n\n    // requesting randomness\n    requestId = requestRandomness(s_keyHash, s_fee);\n\n    // storing requestId and roller address\n    s_rollers[requestId] = roller;\n\n    // emitting event to signal rolling of die\n    s_results[roller] = ROLL_IN_PROGRESS;\n    emit DiceRolled(requestId, roller);\n  }\n\n  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {\n    uint256 d20Value = randomness.mod(20).add(1);\n    s_results[s_rollers[requestId]] = d20Value;\n    emit DiceLanded(requestId, d20Value);\n  }\n\n  function house(address player) public view returns (string memory) {\n    require(s_results[player] != 0, \"Dice not rolled\");\n    require(s_results[player] != ROLL_IN_PROGRESS, \"Roll in progress\");\n    return getHouseName(s_results[player]);\n  }\n}\n*/\n",
   "sourcePath": "/Users/jrgriffiniii/src/github.com/jrgriffiniii/drizzle-tutorials/contracts/CornContract.sol",
   "ast": {
     "absolutePath": "project:/contracts/CornContract.sol",
@@ -1102,14 +1102,14 @@
         "src": "33:23:1"
       },
       {
-        "absolutePath": "project:/contracts/Commodity.sol",
-        "file": "../contracts/Commodity.sol",
+        "absolutePath": "project:/contracts/CommodityContract.sol",
+        "file": "../contracts/CommodityContract.sol",
         "id": 160,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 164,
         "sourceUnit": 158,
-        "src": "58:36:1",
+        "src": "58:44:1",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -1122,11 +1122,11 @@
               "name": "CommodityContract",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 157,
-              "src": "121:17:1"
+              "src": "129:17:1"
             },
             "id": 162,
             "nodeType": "InheritanceSpecifier",
-            "src": "121:17:1"
+            "src": "129:17:1"
           }
         ],
         "contractDependencies": [],
@@ -1138,15 +1138,15 @@
           157
         ],
         "name": "CornContract",
-        "nameLocation": "105:12:1",
+        "nameLocation": "113:12:1",
         "nodeType": "ContractDefinition",
         "nodes": [],
         "scope": 164,
-        "src": "96:47:1",
+        "src": "104:47:1",
         "usedErrors": []
       }
     ],
-    "src": "33:1632:1"
+    "src": "33:1640:1"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/CornContract.sol",
@@ -1174,14 +1174,14 @@
         "src": "33:23:1"
       },
       {
-        "absolutePath": "project:/contracts/Commodity.sol",
-        "file": "../contracts/Commodity.sol",
+        "absolutePath": "project:/contracts/CommodityContract.sol",
+        "file": "../contracts/CommodityContract.sol",
         "id": 160,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 164,
         "sourceUnit": 158,
-        "src": "58:36:1",
+        "src": "58:44:1",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -1194,11 +1194,11 @@
               "name": "CommodityContract",
               "nodeType": "IdentifierPath",
               "referencedDeclaration": 157,
-              "src": "121:17:1"
+              "src": "129:17:1"
             },
             "id": 162,
             "nodeType": "InheritanceSpecifier",
-            "src": "121:17:1"
+            "src": "129:17:1"
           }
         ],
         "contractDependencies": [],
@@ -1210,36 +1210,30 @@
           157
         ],
         "name": "CornContract",
-        "nameLocation": "105:12:1",
+        "nameLocation": "113:12:1",
         "nodeType": "ContractDefinition",
         "nodes": [],
         "scope": 164,
-        "src": "96:47:1",
+        "src": "104:47:1",
         "usedErrors": []
       }
     ],
-    "src": "33:1632:1"
+    "src": "33:1640:1"
   },
   "compiler": {
     "name": "solc",
     "version": "0.8.7+commit.e28d00a7.Emscripten.clang"
   },
   "networks": {
-    "1642264436925": {
+    "1642295699043": {
       "events": {},
       "links": {},
-      "address": "0xbC68F3BB5aC5BcE18Cafd5cEAC4356B6f9a395d6",
-      "transactionHash": "0xfb9ae2093f681f07bf92e58519c4f6a7ab15a1947f313a542eac41fe509a035e"
-    },
-    "1642289389680": {
-      "events": {},
-      "links": {},
-      "address": "0xa2454c5fe42c4688F7B6175d2D2Fa421965Efb35",
-      "transactionHash": "0x0e427a31a7e00854585fcdad8c5974e2fc96c0591aeca3074e6aa86dad8d66f8"
+      "address": "0x79291F4EC79b3AC5A98AeB0129C9810B6d18BcE4",
+      "transactionHash": "0xdaf6f3ef747f1ec9f8e5b4f2716e7074b689436886e6be8fd09154b3b51476f8"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-15T23:49:29.255Z",
+  "updatedAt": "2022-01-16T01:34:12.752Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

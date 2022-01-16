@@ -84,7 +84,7 @@ module.exports = {
       port: 8545,
       network_id: "*",
       gas: 4612388,
-    },
+    }
   },
 
   // Set default mocha options here, use special reporters etc.

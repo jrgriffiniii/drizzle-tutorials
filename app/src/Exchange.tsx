@@ -7,6 +7,74 @@ import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
+type TransactionsProps = {
+  initialized: boolean;
+  drizzleState: any;
+};
+
+const Transactions: Function = ({
+  initialized,
+  drizzleState
+}: TransactionsProps) => {
+  /*
+  const transactionStack: any = useSelector((state: any) => state.transactionStack);
+  const transactions: any = useSelector((state: any) => state.transactions);
+  */
+
+  /*
+  let transactionStack: any = [];
+  let transactions: any = [];
+  */
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    if (initialized) {
+      //const transactionStack = drizzleState.transactionStack;
+
+      drizzleState.transactionStack.map((txId: any) => {
+        /*
+        if (drizzleState.transactions[txId]) {
+          return (
+            <li>
+              {drizzleState.transactions[txId].receipt.transactionHash}: {drizzleState.transactions[txId].status}
+            </li>
+          )
+        }
+        */
+      });
+
+    }
+  });
+
+  const items = drizzleState.transactionStack.map((txId: any) => {
+    if (drizzleState.transactions[txId]) {
+      if (drizzleState.transactions[txId].receipt) {
+        return (
+          <ListItem key={txId}>
+            <ListItemText primary={txId} secondary={drizzleState.transactions[txId].status} />
+          </ListItem>
+        )
+      } else {
+        return (
+          <ListItem key={txId}>
+            <ListItemText primary={txId} secondary={drizzleState.transactions[txId].status} />
+          </ListItem>
+        )
+      }
+    }
+  });
+
+  return (
+    <List >
+      { items }
+    </List>
+  )
+};
+
 type ExchangeProps = {
   drizzle: any;
   drizzleState: any;
@@ -19,7 +87,6 @@ const Exchange: Function = ({
   initialized,
 }: ExchangeProps) => {
   const [account, setAccount] = useState<string | null>(null);
-  const [balance, setBalance] = useState<number | null>(null);
 
   const [cornContractKey, setCornContractKey] = useState<string | null>(null);
   const [cornContractBalance, setCornContractBalance] = useState<string | null>(null);
@@ -27,8 +94,8 @@ const Exchange: Function = ({
   const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
   const [tokenSupply, setTokenSupply] = useState<string | null>(null);
 
-  const [gameTokenKey, setGameTokenKey] = useState<string | null>(null);
-  const [gameTokenBalance, setGameTokenBalance] = useState<string | null>(null);
+  const [accountTokenKey, setGameTokenKey] = useState<string | null>(null);
+  const [accountTokenBalance, setGameTokenBalance] = useState<string | null>(null);
 
   const [exchangeReservesKey, setExchangeReservesKey] = useState<string | null>(
     null
@@ -45,18 +112,8 @@ const Exchange: Function = ({
 
     if (walletConnected) {
       // If the wallet is connected for the first time, store the account
-      const primaryAccount: string = drizzleState.accounts[0];
-      setAccount(primaryAccount);
-
-      if (primaryAccount) {
-        console.log(primaryAccount);
-
-        let accountBalance: number =
-          drizzleState.accountBalances[primaryAccount];
-        accountBalance = accountBalance * 0.1 ** 18;
-        setBalance(accountBalance);
-        console.log(primaryAccount);
-      }
+      const clientAccount: string = drizzleState.accounts[0];
+      setAccount(clientAccount);
     } else if (initialized && account) {
 
       // This handles the state for the interactions between the Ethereum network, contracts, and React
@@ -81,8 +138,8 @@ const Exchange: Function = ({
       const GameToken: any = drizzle.contracts.GameToken;
 
       // Retrieve the CornContract state and contracts
-      //const CornContractState: any = drizzleState.contracts.CornContract;
-      //const CornContract: any = drizzle.contracts.CornContract;
+      const CornContractState: any = drizzleState.contracts.CornContract;
+      const CornContract: any = drizzle.contracts.CornContract;
 
       // This retrieves the number of ETH deposited into the exchange
       if (exchangeReservesKey == null || exchangeReserves == null) {
@@ -120,7 +177,7 @@ const Exchange: Function = ({
       }
 
       // This retrieves the amount of tokens owned by the user
-      if (gameTokenKey == null || gameTokenBalance == null) {
+      if (accountTokenKey == null || accountTokenBalance == null) {
         const key = GameToken.methods['getBalance'].cacheCall(account, {
           from: account,
         });
@@ -130,7 +187,7 @@ const Exchange: Function = ({
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
-          if (cached != gameTokenBalance) {
+          if (cached != accountTokenBalance) {
             setGameTokenBalance(cached);
             setGameTokenKey(key);
           }
@@ -139,7 +196,6 @@ const Exchange: Function = ({
 
       // This retrieves the amount of corn contracts owned by the user
       if (cornContractKey == null || cornContractBalance == null) {
-        /*
         const key = CornContract.methods['getBalance'].cacheCall(account, {
           from: account,
         });
@@ -149,12 +205,11 @@ const Exchange: Function = ({
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
-          if (cached != gameTokenBalance) {
+          if (cached != accountTokenBalance) {
             setGameTokenBalance(cached);
             setGameTokenKey(key);
           }
         }
-        */
       }
     }
   });
@@ -168,7 +223,7 @@ const Exchange: Function = ({
       const creditAmount: number = 1;
 
       // This submits a transaction to purchase a token from the exchange
-      const stackId: any = GameToken.methods['receive'].cacheSend({
+      const stackId: any = GameToken.methods['purchase'].cacheSend({
         from: account,
         value: creditAmount,
       });
@@ -198,17 +253,19 @@ const Exchange: Function = ({
   };
 
   return (
+    <>
+      <Typography
+        variant="h3"
+        component="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+      >
+        Credit Exchange
+      </Typography>
     <Card>
       <CardContent>
-        <Typography
-          variant="h4"
-          component="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          Credit Exchange
-        </Typography>
+        
         {tokenSupply && (
           <Typography>
             <strong>ETH Reserves: {exchangeReserves}</strong>
@@ -219,9 +276,9 @@ const Exchange: Function = ({
             <strong>Credit Supply: {tokenSupply}</strong>
           </Typography>
         )}
-        {true && (
+        {!cornContractBalance != null && (
           <Typography>
-            <strong>🌽 Balance: 0.0</strong>
+            <strong>🌽 Balance: {cornContractBalance}</strong>
           </Typography>
         )}
         {!initialized && (
@@ -245,19 +302,16 @@ const Exchange: Function = ({
         </form>
       </CardActions>
 
+      
+
       <Container>
-        {initialized && transactionId != null && transaction != null && (
-          <>
-            <Typography>Transaction Hash: {transactionHash}</Typography>
-            <Typography>Transaction Status: {transactionStatus}</Typography>
-          </>
-        )}
+
         {initialized && transactionId != null && transaction == null && (
           <Typography>Transaction in progress...</Typography>
         )}
         {initialized &&
           account &&
-          gameTokenBalance == null &&
+          accountTokenBalance == null &&
           transactionId == null && <Typography>Please buy credits</Typography>}
         {!initialized ||
           (!account && (
@@ -265,6 +319,22 @@ const Exchange: Function = ({
           ))}
       </Container>
     </Card>
+
+    <Typography
+        variant="h4"
+        component="h2"
+        align="center"
+        color="textPrimary"
+        gutterBottom
+      >
+        Transactions
+      </Typography>
+      <Container>
+        {initialized && (
+          <Transactions initialized={initialized} drizzleState={drizzleState}/>
+        )}
+      </Container>
+    </>
   );
 };
 
