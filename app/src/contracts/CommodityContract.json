@@ -1080,13 +1080,11 @@
   "sourceMap": "58:1351:0:-:0;;;290:104;;;;;;;;;-1:-1:-1;321:8:0;:24;;-1:-1:-1;;;;;;321:24:0;340:4;321:24;;;;;355:18;;321:24;355:18;;;;;129:4;355:32;;58:1351;;;;;;",
   "deployedSourceMap": "58:1351:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;442:31;;;451:10;479:51:4;;463:9:0;561:2:4;546:18;;539:34;442:31:0;;452:18:4;442:31:0;;;;;;;;58:1351;;529:31;;;538:10;479:51:4;;550:9:0;561:2:4;546:18;;539:34;529:31:0;;452:18:4;529:31:0;305:274:4;573:96:0;;;;;;;;;;-1:-1:-1;620:7:0;646:8;-1:-1:-1;;;;;646:8:0;:16;573:96;;;730:25:4;;;718:2;703:18;573:96:0;;;;;;;1148:259;;;:::i;888:254::-;;;:::i;:::-;;675:95;;;;;;;;;;-1:-1:-1;719:7:0;754:8;;-1:-1:-1;;;;;754:8:0;745:18;;:8;:18;;;;;;675:95;;91:42;;;;;;;;;;;;129:4;91:42;;776:106;;;;;;;;;;-1:-1:-1;776:106:0;;;;;:::i;:::-;-1:-1:-1;;;;;860:15:0;834:7;860:15;;;:8;:15;;;;;;;776:106;1148:259;1190:7;1309:8;;-1:-1:-1;;;;;1309:8:0;1300:18;;:8;:18;;;;;:28;;1242:10;;1280:9;;;;1300:18;1190:7;;1300:28;;1280:9;;1300:28;:::i;:::-;;;;-1:-1:-1;;1347:10:0;1338:20;;;;:8;:20;;;;;:30;;1362:6;;1338:20;:30;;1362:6;;1338:30;:::i;:::-;;;;-1:-1:-1;;;;;;;;1386:14:0;;;1148:259;-1:-1:-1;1148:259:0:o;888:254::-;935:22;968:8;;-1:-1:-1;;;;;968:8:0;1067:18;;;968:8;1067:18;;;;;:28;;968:8;;1004:9;;;;1067:18;935:22;1067:28;;1004:9;;1067:28;:::i;:::-;;;;-1:-1:-1;;1114:10:0;1105:20;;;;:8;:20;;;;;:30;;1129:6;;1105:20;:30;;1129:6;;1105:30;:::i;:::-;;;;-1:-1:-1;;;;888:254:0:o;14:286:4:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;168:23;;-1:-1:-1;;;;;220:31:4;;210:42;;200:70;;266:1;263;256:12;200:70;289:5;14:286;-1:-1:-1;;;14:286:4:o;766:128::-;806:3;837:1;833:6;830:1;827:13;824:39;;;843:18;;:::i;:::-;-1:-1:-1;879:9:4;;766:128::o;899:125::-;939:4;967:1;964;961:8;958:34;;;972:18;;:::i;:::-;-1:-1:-1;1009:9:4;;899:125::o;1029:127::-;1090:10;1085:3;1081:20;1078:1;1071:31;1121:4;1118:1;1111:15;1145:4;1142:1;1135:15",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.7;\n\ncontract CommodityContract {\n    uint256 public constant MAX_BALANCE = 1000;\n\n    address private deployed;\n    mapping(address => uint256) balances;\n\n    event Received(address, uint256);\n    event Fallback(address, uint256);\n\n    constructor() public {\n        deployed = address(this);\n        balances[deployed] = MAX_BALANCE;\n    }\n\n    receive() external payable {\n        emit Received(msg.sender, msg.value);\n    }\n\n    fallback() external payable {\n        emit Fallback(msg.sender, msg.value);\n    }\n\n    function getDeposited() external view returns (uint256) {\n        return deployed.balance;\n    }\n\n    function getSupply() external view returns (uint256) {\n        return balances[deployed];\n    }\n\n    function getBalance(address owner) external view returns (uint256) {\n        return balances[owner];\n    }\n\n    function purchase() external payable {\n        address payable seller = payable(deployed);\n        uint256 amount = msg.value;\n\n        // This must be denominated in Wei\n        balances[deployed] -= amount;\n        balances[msg.sender] += amount;\n    }\n\n    function sell() external payable returns (uint256) {\n        address payable seller = payable(msg.sender);\n        uint256 amount = msg.value;\n\n        balances[deployed] += amount;\n        balances[msg.sender] -= amount;\n\n        return seller.balance;\n    }\n}\n",
-  "sourcePath": "/Users/jrgriffiniii/src/github.com/jrgriffiniii/drizzle-tutorials/contracts/CommodityContract.sol",
+  "sourcePath": "/Users/jrg5/src/github.com/jrgriffiniii/workspace1/drizzle-tutorials/contracts/CommodityContract.sol",
   "ast": {
     "absolutePath": "project:/contracts/CommodityContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        157
-      ]
+      "CommodityContract": [157]
     },
     "id": 158,
     "license": "MIT",
@@ -1094,12 +1092,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -1110,9 +1103,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 157,
-        "linearizedBaseContracts": [
-          157
-        ],
+        "linearizedBaseContracts": [157],
         "name": "CommodityContract",
         "nameLocation": "67:17:0",
         "nodeType": "ContractDefinition",
@@ -2167,9 +2158,7 @@
               "src": "925:217:0",
               "statements": [
                 {
-                  "assignments": [
-                    96
-                  ],
+                  "assignments": [96],
                   "declarations": [
                     {
                       "constant": false,
@@ -2262,9 +2251,7 @@
                   "src": "935:42:0"
                 },
                 {
-                  "assignments": [
-                    103
-                  ],
+                  "assignments": [103],
                   "declarations": [
                     {
                       "constant": false,
@@ -2509,9 +2496,7 @@
               "src": "1199:208:0",
               "statements": [
                 {
-                  "assignments": [
-                    127
-                  ],
+                  "assignments": [127],
                   "declarations": [
                     {
                       "constant": false,
@@ -2618,9 +2603,7 @@
                   "src": "1209:44:0"
                 },
                 {
-                  "assignments": [
-                    135
-                  ],
+                  "assignments": [135],
                   "declarations": [
                     {
                       "constant": false,
@@ -2929,9 +2912,7 @@
   "legacyAST": {
     "absolutePath": "project:/contracts/CommodityContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        157
-      ]
+      "CommodityContract": [157]
     },
     "id": 158,
     "license": "MIT",
@@ -2939,12 +2920,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -2955,9 +2931,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 157,
-        "linearizedBaseContracts": [
-          157
-        ],
+        "linearizedBaseContracts": [157],
         "name": "CommodityContract",
         "nameLocation": "67:17:0",
         "nodeType": "ContractDefinition",
@@ -4012,9 +3986,7 @@
               "src": "925:217:0",
               "statements": [
                 {
-                  "assignments": [
-                    96
-                  ],
+                  "assignments": [96],
                   "declarations": [
                     {
                       "constant": false,
@@ -4107,9 +4079,7 @@
                   "src": "935:42:0"
                 },
                 {
-                  "assignments": [
-                    103
-                  ],
+                  "assignments": [103],
                   "declarations": [
                     {
                       "constant": false,
@@ -4354,9 +4324,7 @@
               "src": "1199:208:0",
               "statements": [
                 {
-                  "assignments": [
-                    127
-                  ],
+                  "assignments": [127],
                   "declarations": [
                     {
                       "constant": false,
@@ -4463,9 +4431,7 @@
                   "src": "1209:44:0"
                 },
                 {
-                  "assignments": [
-                    135
-                  ],
+                  "assignments": [135],
                   "declarations": [
                     {
                       "constant": false,
@@ -4776,15 +4742,15 @@
     "version": "0.8.7+commit.e28d00a7.Emscripten.clang"
   },
   "networks": {
-    "1642295699043": {
+    "1642304058789": {
       "events": {},
       "links": {},
-      "address": "0xf4954f1aF55337A1D8E0e1A17391A8FddEDa66DA",
-      "transactionHash": "0xbd413db229d1dc4cd5a8de0a02a33940f8f74d975072cc41fa504026306a8793"
+      "address": "0x2A7E2EA7f60EC2cb65C1eB05F666485b312a02a3",
+      "transactionHash": "0x4329795d1a398566f789ee1894dcc9c138a7ce76b273841d9af3387b06430137"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-16T01:34:12.749Z",
+  "updatedAt": "2022-01-16T03:44:41.725Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

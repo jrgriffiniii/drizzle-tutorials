@@ -1,4 +1,4 @@
-import GameToken from './contracts/GameToken.json';
+import GameToken from './contracts/MarketToken.json';
 import CommodityContract from './contracts/CommodityContract.json';
 import CornContract from './contracts/CornContract.json';
 

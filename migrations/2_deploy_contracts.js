@@ -1,4 +1,4 @@
-const GameToken = artifacts.require("GameToken");
+const GameToken = artifacts.require("MarketToken");
 const CommodityContract = artifacts.require("CommodityContract");
 const CornContract = artifacts.require("CornContract");
 

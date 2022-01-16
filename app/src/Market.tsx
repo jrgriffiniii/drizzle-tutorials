@@ -72,7 +72,7 @@ const Product: Function = ({
             {description}
           </Typography>
           <Typography>
-            <strong>Price:</strong> {price} Tokens
+            <strong>Price:</strong> {price} Market Tokens
           </Typography>
         </CardContent>
         <CardActions className={classes.cardActions}>
