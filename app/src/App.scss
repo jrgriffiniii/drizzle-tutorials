@@ -36,31 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-// Customizations
-
-.market-token {
-  &-form {
-    width: 100%;
-  }
-
-  &__buy-button {
-    width: 100%;
-
-    &.MuiButtonBase-root {
-
-      margin-top: 0.2rem;
-      margin-bottom: 0.2rem;
-    }
-  }
-
-  &__sell-button {
-    width: 100%;
-
-    &.MuiButtonBase-root {
-
-      margin-top: 0.2rem;
-      margin-bottom: 0.2rem;
-    }
-  }
-}

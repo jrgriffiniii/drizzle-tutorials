@@ -189,9 +189,6 @@ const Market: Function = ({
   const items = rows.map((row: any, key: number) => {
     return (
       <TableRow key={key}>
-        <TableCell>
-          {row.symbol}
-        </TableCell>
         <TableCell align="right">
           <a href={row.month.url}>
             {row.month.symbol}
@@ -234,10 +231,9 @@ const Market: Function = ({
         <caption>Commodity Futures Contracts</caption>
         <TableHead>
           <TableRow>
-            <TableCell>Symbol</TableCell>
             <TableCell align="right">Month</TableCell>
-            <TableCell align="right">Bid Price</TableCell>
-            <TableCell align="right">Ask Price</TableCell>
+            <TableCell align="right">Bid Price (ETH)</TableCell>
+            <TableCell align="right">Ask Price (ETH)</TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>

@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import Account from './Account';
 import Exchange from './Exchange';
 import Market from './Market';
+import Transactions from './Transactions';
 
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -93,6 +94,7 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
               initialized={initialized}
             />
           )}
+          <Transactions drizzleState={drizzleState} initialized={initialized} />
 
           <Exchange
             drizzle={drizzle}

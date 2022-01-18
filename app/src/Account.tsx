@@ -57,7 +57,6 @@ const Account: Function = ({
       !account &&
       Object.keys(drizzleState.accounts).length > 0
     ) {
-      console.log('trace1');
       console.log(drizzleState);
 
       const primaryAccount: string = drizzleState.accounts[0];
@@ -161,19 +160,50 @@ const Account: Function = ({
                   <ListItemText primary={balance} secondary="Balance (ETH)" />
                 )}
               </ListItem>
+              <Divider />
+              <Typography
+                variant="h4"
+                component="h3"
+                align="center"
+                color="textPrimary"
+                gutterBottom
+              >
+                Exchange Liquidity
+              </Typography>
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
                     <AccountBalanceWalletIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {MarketTokenBalance && (
-                  <ListItemText primary={MarketTokenBalance} secondary="Balance (Exchange Tokens)" />
-                )}
+                <ContractData
+                  drizzle={drizzle}
+                  drizzleState={drizzleState}
+                  contract="MarketToken"
+                  method="getBalance"
+                  methodArgs={[account, { from: account }]}
+                  render={(displayData: any) => {
+                    const parsed: number = parseInt(displayData);
+                    const formatted: string = parsed.toFixed(14);
+
+                    return (
+                      <ListItemText primary={formatted} secondary="Balance (Exchange Tokens)" />
+                    )
+                  }}
+                />
               </ListItem>
             </List>
           </nav>
         <Divider />
+        <Typography
+          variant="h4"
+          component="h3"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Corn Futures
+        </Typography>
         <nav>
           <List>
             <ListItem>
@@ -190,16 +220,6 @@ const Account: Function = ({
         </nav>
         </CardContent>
       </Card>
-      
-      <div>
-        <strong>Stored Value: </strong>
-        <ContractData
-          drizzle={drizzle}
-          drizzleState={drizzleState}
-          contract="MarketToken"
-          method="getSupply"
-        />
-      </div>
     </>
   );
 };

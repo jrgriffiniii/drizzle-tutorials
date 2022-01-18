@@ -25,71 +25,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
-type TransactionsProps = {
-  initialized: boolean;
-  drizzleState: any;
-};
-
-const Transactions: Function = ({
-  initialized,
-  drizzleState,
-}: TransactionsProps) => {
-  /*
-  const transactionStack: any = useSelector((state: any) => state.transactionStack);
-  const transactions: any = useSelector((state: any) => state.transactions);
-  */
-
-  /*
-  let transactionStack: any = [];
-  let transactions: any = [];
-  */
-  const [transactions, setTransactions] = useState([]);
-
-  const items = drizzleState.transactionStack.map((txId: any) => {
-    if (drizzleState.transactions[txId]) {
-      if (drizzleState.transactions[txId].receipt) {
-        return (
-          <TableRow key={txId}>
-            <TableCell>
-              {txId}
-            </TableCell>
-            <TableCell>
-              {drizzleState.transactions[txId].status}
-            </TableCell>
-          </TableRow>
-        );
-      } else {
-        return (
-          <TableRow key={txId}>
-            <TableCell>
-              {txId}
-            </TableCell>
-            <TableCell>
-              {drizzleState.transactions[txId].status}
-            </TableCell>
-          </TableRow>
-        );
-      }
-    }
-  });
-
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <caption>Transactions</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>Transaction Hash</TableCell>
-            <TableCell align="right">Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items}
-        </TableBody>
-        </Table>
-    </TableContainer>
-  );
-};
+import './Exchange.scss';
 
 type ExchangeProps = {
   drizzle: any;
@@ -369,23 +305,6 @@ const Exchange: Function = ({
               <Typography>Please connect your web wallet.</Typography>
             ))}
         </Container>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <Typography
-            variant="h4"
-            component="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Transactions
-          </Typography>
-        {initialized && (
-          <Transactions initialized={initialized} drizzleState={drizzleState} />
-        )}
-        </CardContent>
       </Card>
     </>
   );
