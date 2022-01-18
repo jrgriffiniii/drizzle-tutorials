@@ -10,6 +10,20 @@ import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+
+import Paper from '@material-ui/core/Paper';
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
+
+import BusinessIcon from '@material-ui/icons/Business';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import BarChartIcon from '@material-ui/icons/BarChart';
 
 type TransactionsProps = {
   initialized: boolean;
@@ -35,27 +49,46 @@ const Transactions: Function = ({
     if (drizzleState.transactions[txId]) {
       if (drizzleState.transactions[txId].receipt) {
         return (
-          <ListItem key={txId}>
-            <ListItemText
-              primary={txId}
-              secondary={drizzleState.transactions[txId].status}
-            />
-          </ListItem>
+          <TableRow key={txId}>
+            <TableCell>
+              {txId}
+            </TableCell>
+            <TableCell>
+              {drizzleState.transactions[txId].status}
+            </TableCell>
+          </TableRow>
         );
       } else {
         return (
-          <ListItem key={txId}>
-            <ListItemText
-              primary={txId}
-              secondary={drizzleState.transactions[txId].status}
-            />
-          </ListItem>
+          <TableRow key={txId}>
+            <TableCell>
+              {txId}
+            </TableCell>
+            <TableCell>
+              {drizzleState.transactions[txId].status}
+            </TableCell>
+          </TableRow>
         );
       }
     }
   });
 
-  return <List>{items}</List>;
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="simple table">
+        <caption>Transactions</caption>
+        <TableHead>
+          <TableRow>
+            <TableCell>Transaction Hash</TableCell>
+            <TableCell align="right">Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {items}
+        </TableBody>
+        </Table>
+    </TableContainer>
+  );
 };
 
 type ExchangeProps = {
@@ -245,32 +278,61 @@ const Exchange: Function = ({
 
   return (
     <>
-      <Typography
-        variant="h3"
-        component="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        The Exchange
-      </Typography>
       <Card>
         <CardContent>
-          {tokenSupply && (
-            <Typography>
-              <strong>ETH Reserves: {exchangeReserves}</strong>
-            </Typography>
-          )}
-          {tokenSupply && (
-            <Typography>
-              <strong>Market Token Reserves: {tokenSupply}</strong>
-            </Typography>
-          )}
-          {!cornContractBalance != null && (
-            <Typography>
-              <strong>🌽 Corn Supply (Bushels): {cornContractBalance}</strong>
-            </Typography>
-          )}
+          <Typography
+            variant="h3"
+            component="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Exchange
+          </Typography>
+          <nav>
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <BusinessIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {exchangeReserves != null && (
+                  <ListItemText primary="0x" secondary="Address" />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AccountBalanceIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {exchangeReserves != null && (
+                  <ListItemText primary={exchangeReserves} secondary="Reserves (ETH)" />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AccountBalanceIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {tokenSupply != null && (
+                  <ListItemText primary={tokenSupply} secondary="Reserves (Exchange Tokens)" />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <BarChartIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {tokenSupply != null && (
+                  <ListItemText primary="1.0" secondary="Exchange Token Price (Exchange Token/ETH)" />
+                )}
+              </ListItem>
+            </List>
+          </nav>
           {!initialized && (
             <Typography>
               <strong>Please connect with your web wallet.</strong>
@@ -278,15 +340,15 @@ const Exchange: Function = ({
           )}
         </CardContent>
         <CardActions>
-          <form>
+          <form className="market-token-form">
             <Container>
-              <Button color="primary" variant="contained" onClick={buyToken}>
-                Buy Market Tokens
+              <Button className="market-token__buy-button" color="primary" variant="contained" onClick={buyToken}>
+                Stake
               </Button>
             </Container>
             <Container>
-              <Button color="primary" variant="contained" onClick={sellToken}>
-                Sell Market Tokens
+              <Button className="market-token__sell-button" color="secondary" variant="contained" onClick={sellToken}>
+                Withdraw
               </Button>
             </Container>
           </form>
@@ -309,20 +371,22 @@ const Exchange: Function = ({
         </Container>
       </Card>
 
-      <Typography
-        variant="h4"
-        component="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        Transactions
-      </Typography>
-      <Container>
+      <Card>
+        <CardContent>
+          <Typography
+            variant="h4"
+            component="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Transactions
+          </Typography>
         {initialized && (
           <Transactions initialized={initialized} drizzleState={drizzleState} />
         )}
-      </Container>
+        </CardContent>
+      </Card>
     </>
   );
 };

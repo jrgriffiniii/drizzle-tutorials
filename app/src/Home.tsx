@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 
-import './App.css';
-
 import Account from './Account';
 import Exchange from './Exchange';
 import Market from './Market';

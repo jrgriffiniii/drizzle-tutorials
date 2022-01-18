@@ -12,6 +12,16 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import TableContainer from '@material-ui/core/TableContainer';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
+
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -72,7 +82,13 @@ const Product: Function = ({
             {description}
           </Typography>
           <Typography>
-            <strong>Price:</strong> {price} Market Tokens
+            <strong>Price (Tokens):</strong> {price}
+          </Typography>
+          <Typography>
+            <strong>Price (ETH):</strong> {price}
+          </Typography>
+          <Typography>
+            <strong>Supply (Bushels):</strong> {price}
           </Typography>
         </CardContent>
         <CardActions className={classes.cardActions}>
@@ -121,6 +137,16 @@ const Market: Function = ({
   const classes = useStyles();
   const products: any[] = [
     {
+      name: '🌽',
+      description: 'Corn',
+      price: 1,
+      quantity: 1,
+      measurement: 'bushel',
+      gtin: '7-25272-73070-6',
+    }
+  ]
+  const productsFull: any[] = [
+    {
       name: '☕',
       description: 'Coffee',
       price: 1,
@@ -154,20 +180,75 @@ const Market: Function = ({
     },
   ];
 
-  return (
-    <Container maxWidth="sm">
-      <Typography
-        component="h1"
-        variant="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        Commodities
-      </Typography>
+  const rows = [
+    { id: 1, symbol: 'Corn', month: { symbol: 'MAR 2022', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
+    { id: 2, symbol: 'Corn', month: { symbol: 'MAY 2022', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
+    { id: 3, symbol: 'Corn', month: { symbol: 'MAR 2023', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
+  ];
 
-      <Products products={products} />
-    </Container>
+  const items = rows.map((row: any, key: number) => {
+    return (
+      <TableRow key={key}>
+        <TableCell>
+          {row.symbol}
+        </TableCell>
+        <TableCell align="right">
+          <a href={row.month.url}>
+            {row.month.symbol}
+          </a>
+        </TableCell>
+        <TableCell align="right">
+          {row.bid}
+        </TableCell>
+        <TableCell align="right">
+          {row.ask}
+        </TableCell>
+        <TableCell align="right">
+          <Button color="primary" variant="contained">
+            Buy
+          </Button>
+        </TableCell>
+        <TableCell align="right">
+          <Button color="secondary" variant="contained">
+            Sell
+          </Button>
+        </TableCell>
+      </TableRow>
+    );
+  });
+
+  return (
+      <Card>
+        <CardContent>
+          <Typography
+            variant="h4"
+            component="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Corn Futures
+          </Typography>
+    <TableContainer component={Paper}>
+      <Table aria-label="orders table">
+        <caption>Commodity Futures Contracts</caption>
+        <TableHead>
+          <TableRow>
+            <TableCell>Symbol</TableCell>
+            <TableCell align="right">Month</TableCell>
+            <TableCell align="right">Bid Price</TableCell>
+            <TableCell align="right">Ask Price</TableCell>
+            <TableCell align="right"></TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {items}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </CardContent>
+    </Card>
   );
 };
 

@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import ShopIcon from '@material-ui/icons/Shop';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import FormControl from '@material-ui/core/FormControl';
-import TextField from '@material-ui/core/TextField';
+import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 import { newContextComponents } from '@drizzle/react-components';
 const { AccountData, ContractData, ContractForm } = newContextComponents;
@@ -129,49 +128,69 @@ const Account: Function = ({
 
   return (
     <>
-      <Typography
-        variant="h3"
-        component="h2"
-        align="center"
-        color="textPrimary"
-        gutterBottom
-      >
-        My Account
-      </Typography>
       <Card>
         <CardContent>
-          {account && (
-            <Typography>
-              <strong>Account: {account}</strong>
-            </Typography>
-          )}
-          {balance != null && (
-            <Typography>
-              <strong>ETH: {balance}</strong>
-            </Typography>
-          )}
-          {MarketTokenBalance && (
-            <Typography>
-              <strong>Market Tokens: {MarketTokenBalance}</strong>
-            </Typography>
-          )}
-          {true && (
-            <Typography>
-              <strong>🌽Corn Contracts: </strong>
-            </Typography>
-          )}
-          {!account && (
-            <Typography>
-              <strong>Please select an account with your web wallet.</strong>
-            </Typography>
-          )}
-          {!initialized && (
-            <Typography>
-              <strong>Please connect with your web wallet.</strong>
-            </Typography>
-          )}
+          <Typography
+            variant="h3"
+            component="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            My Account
+          </Typography>
+          <nav>
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AccountCircleIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {account && (
+                  <ListItemText primary={account} secondary="Account" />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AccountBalanceWalletIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {balance && (
+                  <ListItemText primary={balance} secondary="Balance (ETH)" />
+                )}
+              </ListItem>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar>
+                    <AccountBalanceWalletIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                {MarketTokenBalance && (
+                  <ListItemText primary={MarketTokenBalance} secondary="Balance (Exchange Tokens)" />
+                )}
+              </ListItem>
+            </List>
+          </nav>
+        <Divider />
+        <nav>
+          <List>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <AccountBalanceWalletIcon />
+                </Avatar>
+              </ListItemAvatar>
+              {balance && (
+                <ListItemText primary={balance} secondary="Corn Contracts (🌽)" />
+              )}
+            </ListItem>
+          </List>
+        </nav>
         </CardContent>
       </Card>
+      
       <div>
         <strong>Stored Value: </strong>
         <ContractData
