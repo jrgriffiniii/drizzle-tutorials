@@ -41,7 +41,6 @@ const Transactions: Function = ({
 
   items = drizzleState.transactionStack.map((txId: any) => {
     if (drizzleState.transactions[txId]) {
-      if (drizzleState.transactions[txId].receipt) {
         return (
           <TableRow key={txId}>
             <TableCell>
@@ -52,19 +51,8 @@ const Transactions: Function = ({
             </TableCell>
           </TableRow>
         );
-      } else {
-        return (
-          <TableRow key={txId}>
-            <TableCell>
-              {txId}
-            </TableCell>
-            <TableCell>
-              {drizzleState.transactions[txId].status}
-            </TableCell>
-          </TableRow>
-        );
+        
       }
-    }
   });
   }
 

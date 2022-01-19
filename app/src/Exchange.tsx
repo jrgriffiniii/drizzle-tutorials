@@ -25,6 +25,9 @@ import BusinessIcon from '@material-ui/icons/Business';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
+import { newContextComponents } from '@drizzle/react-components';
+const { ContractForm } = newContextComponents;
+
 import './Exchange.scss';
 
 type ExchangeProps = {
@@ -276,24 +279,44 @@ const Exchange: Function = ({
           )}
         </CardContent>
         <CardActions>
+
           <form className="market-token-form">
-            <Container>
-              <Button className="market-token__buy-button" color="primary" variant="contained" onClick={buyToken}>
-                Stake
-              </Button>
-            </Container>
-            <Container>
-              <Button className="market-token__sell-button" color="secondary" variant="contained" onClick={sellToken}>
-                Withdraw
-              </Button>
-            </Container>
+          {initialized && (
+            <ContractForm
+              drizzle={drizzle}
+              contract="MarketToken"
+              method="buy"
+              sendArgs={ { from: account, value: 1 } }
+              render={ (options: any) => {
+
+                return (
+                    <Button className="market-token__buy-button" color="primary" variant="contained" onClick={buyToken}>
+                      Stake
+                    </Button>
+                )
+              }}
+            />
+          )}
+          {initialized && (
+            <ContractForm
+              drizzle={drizzle}
+              contract="MarketToken"
+              method="sell"
+              sendArgs={ { from: account, value: 1 } }
+              render={ (options: any) => {
+
+                return (
+                    <Button className="market-token__sell-button" color="secondary" variant="contained" onClick={buyToken}>
+                      Withdraw
+                    </Button>
+                )
+              }}
+            />
+          )}
           </form>
         </CardActions>
 
         <Container>
-          {initialized && transactionId != null && transaction == null && (
-            <Typography>Transaction in progress...</Typography>
-          )}
           {initialized &&
             account &&
             accountTokenBalance == null &&

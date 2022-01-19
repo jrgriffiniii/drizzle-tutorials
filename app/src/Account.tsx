@@ -168,7 +168,7 @@ const Account: Function = ({
                 color="textPrimary"
                 gutterBottom
               >
-                Exchange Liquidity
+                Exchange Tokens (Staked ETH)
               </Typography>
               <ListItem>
                 <ListItemAvatar>
