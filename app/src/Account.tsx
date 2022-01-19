@@ -17,7 +17,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 import { newContextComponents } from '@drizzle/react-components';
-const { AccountData, ContractData, ContractForm } = newContextComponents;
+const { AccountData, ContractData } = newContextComponents;
 
 type AccountProps = {
   drizzle: any;
@@ -32,7 +32,6 @@ const Account: Function = ({
 }: AccountProps) => {
   //console.log(drizzleState);
 
-  const [account, setAccount] = useState<string | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
 
   const [cornKey, setCornKey] = useState<string | null>(null);
@@ -54,14 +53,13 @@ const Account: Function = ({
   useEffect(() => {
     if (
       initialized &&
-      !account &&
       Object.keys(drizzleState.accounts).length > 0
     ) {
+
       console.log(drizzleState);
 
-      const primaryAccount: string = drizzleState.accounts[0];
-      setAccount(primaryAccount);
-    } else if (initialized && account) {
+    } else if (initialized) {
+      /*
       if (balance == null) {
         let accountBalance: number = drizzleState.accountBalances[account];
 
@@ -85,10 +83,12 @@ const Account: Function = ({
           }
         }
       }
+      */
 
       const ExchangeTokenState: any = drizzleState.contracts.ExchangeToken;
       const ExchangeToken: any = drizzle.contracts.ExchangeToken;
 
+      /*
       if (tokenSupplyKey == null || tokenSupply == null) {
         const key = ExchangeToken.methods['getSupply'].cacheCall({
           from: account,
@@ -122,6 +122,7 @@ const Account: Function = ({
           }
         }
       }
+      */
     }
   });
 
@@ -140,15 +141,26 @@ const Account: Function = ({
           </Typography>
           <nav>
             <List>
+              {initialized && 
+              (
+
+              
+              <AccountData
+                  drizzle={drizzle}
+                  drizzleState={drizzleState}
+                  accountIndex={0}
+                  render={(account: any) => {
+
+                    return (
+                      <>
+                    
               <ListItem>
                 <ListItemAvatar>
                   <Avatar>
                     <AccountCircleIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {account && (
-                  <ListItemText primary={account} secondary="Account" />
-                )}
+                  <ListItemText primary={account.address} secondary="Address" />
               </ListItem>
               <ListItem>
                 <ListItemAvatar>
@@ -156,10 +168,14 @@ const Account: Function = ({
                     <AccountBalanceWalletIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {balance && (
-                  <ListItemText primary={balance} secondary="Balance (ETH)" />
-                )}
+                <ListItemText primary={account.balance} secondary="Balance (ETH)" />
               </ListItem>
+              </>
+)
+                  }}
+                />
+)
+              }
               <Divider />
               <Typography
                 variant="h4"
@@ -168,7 +184,7 @@ const Account: Function = ({
                 color="textPrimary"
                 gutterBottom
               >
-                Exchange Tokens (Staked ETH)
+                Exchange Tokens
               </Typography>
               <ListItem>
                 <ListItemAvatar>
@@ -181,7 +197,7 @@ const Account: Function = ({
                   drizzleState={drizzleState}
                   contract="ExchangeToken"
                   method="getBalance"
-                  methodArgs={[account, { from: account }]}
+                  methodArgs={[drizzleState.accounts[0], { from: drizzleState.accounts[0] }]}
                   render={(displayData: any) => {
                     const parsed: number = parseInt(displayData);
                     const formatted: string = parsed.toFixed(14);
@@ -212,8 +228,8 @@ const Account: Function = ({
                   <AccountBalanceWalletIcon />
                 </Avatar>
               </ListItemAvatar>
-              {balance && (
-                <ListItemText primary={balance} secondary="Corn Contracts (🌽)" />
+              {initialized && (
+                <ListItemText primary={0.0} secondary="Corn Contracts (🌽)" />
               )}
             </ListItem>
           </List>
