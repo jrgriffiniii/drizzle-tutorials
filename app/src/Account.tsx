@@ -199,7 +199,12 @@ const Account: Function = ({
                   method="getBalance"
                   methodArgs={[drizzleState.accounts[0], { from: drizzleState.accounts[0] }]}
                   render={(displayData: any) => {
-                    const parsed: number = parseInt(displayData);
+                      let parsed: number;
+                      if(displayData != null) {
+                        parsed = parseInt(displayData);
+                      } else {
+                        parsed = 0;
+                      }
                     const formatted: string = parsed.toFixed(14);
 
                     return (

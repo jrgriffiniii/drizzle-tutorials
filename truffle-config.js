@@ -76,14 +76,12 @@ module.exports = {
     development: {
       host: "localhost",
       port: 8545,
-      network_id: "*",
-      gas: 4612388,
+      network_id: "*"
     },
     test: {
       host: "0.0.0.0",
       port: 8545,
-      network_id: "*",
-      gas: 4612388,
+      network_id: "*"
     },
   },
 

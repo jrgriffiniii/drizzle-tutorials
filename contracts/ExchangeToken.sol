@@ -11,7 +11,7 @@ contract ExchangeToken {
     event Received(address, uint256);
     event Fallback(address, uint256);
 
-    constructor() public {
+    constructor() {
         deployed = address(this);
         balances[deployed] = MAX_BALANCE;
     }
@@ -36,8 +36,7 @@ contract ExchangeToken {
         return balances[owner];
     }
 
-    function purchase() external payable {
-        address payable seller = payable(deployed);
+    function buy() external payable {
         uint256 amount = msg.value;
 
         // This must be denominated in Wei
@@ -49,19 +48,21 @@ contract ExchangeToken {
         balances[msg.sender] += amount;
     }
 
-    function sell() external payable returns (uint256) {
-        address payable seller = payable(msg.sender);
+    function sell(address seller) external payable returns (bool) {
         uint256 amount = msg.value;
 
         // This must be denominated in Wei
         //(bool sent, bytes memory data) = seller.call{value: msg.value}("");
         //bool sent = seller.send(msg.value);
         //require(sent, "Failed to transfer Ether to the seller account");
+        //bool sent = seller.send(msg.value);
+        //seller.call.value(amount).gas(20317)();
+        (bool sent, bytes memory data) = seller.call{value: amount}("");
 
         //require( balances[deployed] - msg.value <= msg.value, "Not enough tokens available for the seller account." );
         balances[deployed] += amount;
-        balances[msg.sender] -= amount;
+        balances[seller] -= amount;
 
-        return seller.balance;
+        return sent;
     }
 }

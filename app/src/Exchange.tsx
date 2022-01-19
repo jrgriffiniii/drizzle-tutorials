@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import Input from '@material-ui/core/Input';
 
 import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -264,7 +265,13 @@ const Exchange: Function = ({
                     method="getDeposited"
                     methodArgs={[{from: account}]}
                     render={(displayData: any) => {
-                      const parsed: number = parseInt(displayData);
+
+                      let parsed: number;
+                      if(displayData != null) {
+                        parsed = parseInt(displayData);
+                      } else {
+                        parsed = 0;
+                      }
                       const formatted: string = parsed.toFixed(14);
 
                       return (
@@ -288,7 +295,12 @@ const Exchange: Function = ({
                     method="getSupply"
                     methodArgs={[{from: account}]}
                     render={(displayData: any) => {
-                      const parsed: number = parseInt(displayData);
+                      let parsed: number;
+                      if(displayData != null) {
+                        parsed = parseInt(displayData);
+                      } else {
+                        parsed = 0;
+                      }
                       const formatted: string = parsed.toFixed(14);
 
                       return (
@@ -320,7 +332,6 @@ const Exchange: Function = ({
         </CardContent>
         <CardActions>
 
-          <form className="market-token-form">
           {initialized && (
             <ContractForm
               drizzle={drizzle}
@@ -330,9 +341,21 @@ const Exchange: Function = ({
               render={ (options: any) => {
 
                 return (
-                    <Button className="market-token__buy-button" color="primary" variant="contained" onClick={buyToken}>
+                  <form className="market-token-form" onSubmit={options.handleSubmit}>
+                    { options.inputs.map((input: any, index: any) => {
+                      return (
+                        <input
+                          key={input.name}
+                          type="hidden"
+                          name={input.name}
+                          value={drizzleState.accounts[0]}
+                        />
+                      );
+                    })}
+                    <Button className="market-token__buy-button" color="primary" variant="contained" type="submit">
                       Stake
                     </Button>
+                  </form>
                 )
               }}
             />
@@ -342,18 +365,32 @@ const Exchange: Function = ({
               drizzle={drizzle}
               contract="ExchangeToken"
               method="sell"
-              sendArgs={ { from: account, value: 1 } }
+              sendArgs={ { from: drizzleState.accounts[0], value: 1 } }
               render={ (options: any) => {
+                console.log(options.state)
+                options.state['seller'] = drizzleState.accounts[0]
+                console.log(options.state)
 
                 return (
-                    <Button className="market-token__sell-button" color="secondary" variant="contained" onClick={buyToken}>
+                  <form className="market-token-form" onSubmit={options.handleSubmit}>
+                    { options.inputs.map((input: any, index: any) => {
+                      return (
+                        <input
+                          key={input.name}
+                          type="hidden"
+                          name={input.name}
+                          value={drizzleState.accounts[0]}
+                        />
+                      );
+                    })}
+                    <Button className="market-token__sell-button" color="secondary" variant="contained" type="submit">
                       Withdraw
                     </Button>
+                  </form>
                 )
               }}
             />
           )}
-          </form>
         </CardActions>
 
         <Container>
