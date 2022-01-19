@@ -26,7 +26,7 @@ import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import BarChartIcon from '@material-ui/icons/BarChart';
 
 import { newContextComponents } from '@drizzle/react-components';
-const { ContractForm } = newContextComponents;
+const { ContractData, ContractForm } = newContextComponents;
 
 import './Exchange.scss';
 
@@ -51,8 +51,8 @@ const Exchange: Function = ({
   const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
   const [tokenSupply, setTokenSupply] = useState<string | null>(null);
 
-  const [accountTokenKey, setMarketTokenKey] = useState<string | null>(null);
-  const [accountTokenBalance, setMarketTokenBalance] = useState<string | null>(
+  const [accountTokenKey, setExchangeTokenKey] = useState<string | null>(null);
+  const [accountTokenBalance, setExchangeTokenBalance] = useState<string | null>(
     null
   );
 
@@ -81,6 +81,7 @@ const Exchange: Function = ({
         const txHash = transactionStack[transactionId];
         const cached = transactions[txHash];
 
+        /*
         // This retrieves any cached transactions
         if (cached != null) {
           setTransaction(cached);
@@ -90,24 +91,26 @@ const Exchange: Function = ({
             setTransactionHash(cached.receipt.transactionHash);
           }
         }
+        */
       }
 
-      // Retrieve the MarketToken state and contracts
-      const MarketTokenState: any = drizzleState.contracts.MarketToken;
-      const MarketToken: any = drizzle.contracts.MarketToken;
+      // Retrieve the ExchangeToken state and contracts
+      const ExchangeTokenState: any = drizzleState.contracts.ExchangeToken;
+      const ExchangeToken: any = drizzle.contracts.ExchangeToken;
 
       // Retrieve the CornContract state and contracts
       const CornContractState: any = drizzleState.contracts.CornContract;
       const CornContract: any = drizzle.contracts.CornContract;
 
       // This retrieves the number of ETH deposited into the exchange
+      /*
       if (exchangeReservesKey == null || exchangeReserves == null) {
-        const key = MarketToken.methods['getDeposited'].cacheCall({
+        const key = ExchangeToken.methods['getDeposited'].cacheCall({
           from: account,
         });
 
-        if (MarketTokenState.getSupply.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getDeposited[key] || 0.0;
+        if (ExchangeTokenState.getSupply.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getDeposited[key] || 0.0;
           cached = cached.toFixed(14);
 
           if (tokenSupply != cached) {
@@ -116,15 +119,17 @@ const Exchange: Function = ({
           }
         }
       }
+      */
 
+      /*
       // This retrieves the number of tokens owned by the exchange
       if (tokenSupplyKey == null || tokenSupply == null) {
-        const key = MarketToken.methods['getSupply'].cacheCall({
+        const key = ExchangeToken.methods['getSupply'].cacheCall({
           from: account,
         });
 
-        if (MarketTokenState.getSupply.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getSupply[key] || 0.0;
+        if (ExchangeTokenState.getSupply.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getSupply[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
@@ -134,42 +139,47 @@ const Exchange: Function = ({
           }
         }
       }
+      */
 
       // This retrieves the amount of tokens owned by the user
+      /*
       if (accountTokenKey == null || accountTokenBalance == null) {
-        const key = MarketToken.methods['getBalance'].cacheCall(account, {
+        const key = ExchangeToken.methods['getBalance'].cacheCall(account, {
           from: account,
         });
 
-        if (MarketTokenState.getBalance.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getBalance[key] || 0.0;
+        if (ExchangeTokenState.getBalance.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getBalance[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
           if (cached != accountTokenBalance) {
-            setMarketTokenBalance(cached);
-            setMarketTokenKey(key);
+            setExchangeTokenBalance(cached);
+            setExchangeTokenKey(key);
           }
         }
       }
+      */
 
+      /*
       // This retrieves the amount of corn contracts owned by the user
       if (cornContractKey == null || cornContractBalance == null) {
         const key = CornContract.methods['getBalance'].cacheCall(account, {
           from: account,
         });
 
-        if (MarketTokenState.getBalance.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getBalance[key] || 0.0;
+        if (ExchangeTokenState.getBalance.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getBalance[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
           if (cached != accountTokenBalance) {
-            setMarketTokenBalance(cached);
-            setMarketTokenKey(key);
+            setExchangeTokenBalance(cached);
+            setExchangeTokenKey(key);
           }
         }
       }
+      */
     }
   });
 
@@ -177,17 +187,17 @@ const Exchange: Function = ({
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ): void => {
     if (account) {
-      const MarketToken = drizzle.contracts.MarketToken;
+      const ExchangeToken = drizzle.contracts.ExchangeToken;
       // @todo this should be a variable
       const creditAmount: number = 1;
 
       // This submits a transaction to purchase a token from the exchange
-      const stackId: any = MarketToken.methods['purchase'].cacheSend({
+      const stackId: any = ExchangeToken.methods['purchase'].cacheSend({
         from: account,
         value: creditAmount,
       });
 
-      setMarketTokenKey(null);
+      setExchangeTokenKey(null);
       setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
@@ -197,11 +207,11 @@ const Exchange: Function = ({
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ): void => {
     if (account) {
-      const MarketToken = drizzle.contracts.MarketToken;
+      const ExchangeToken = drizzle.contracts.ExchangeToken;
       // @todo this should be a variable
       const creditAmount: number = 1;
 
-      const stackId: any = MarketToken.methods['sell'].cacheSend(
+      const stackId: any = ExchangeToken.methods['sell'].cacheSend(
         account,
         creditAmount,
         {
@@ -209,7 +219,7 @@ const Exchange: Function = ({
         }
       );
 
-      setMarketTokenKey(null);
+      setExchangeTokenKey(null);
       setTokenSupplyKey(null);
       setTransactionId(stackId);
     }
@@ -236,8 +246,8 @@ const Exchange: Function = ({
                     <BusinessIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {exchangeReserves != null && (
-                  <ListItemText primary="0x" secondary="Address" />
+                {initialized && (
+                  <ListItemText primary={drizzle.contracts.ExchangeToken.address} secondary="Address" />
                 )}
               </ListItem>
               <ListItem>
@@ -246,8 +256,22 @@ const Exchange: Function = ({
                     <AccountBalanceIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {exchangeReserves != null && (
-                  <ListItemText primary={exchangeReserves} secondary="Reserves (ETH)" />
+                {initialized && (
+                  <ContractData
+                    drizzle={drizzle}
+                    drizzleState={drizzleState}
+                    contract="ExchangeToken"
+                    method="getDeposited"
+                    methodArgs={[{from: account}]}
+                    render={(displayData: any) => {
+                      const parsed: number = parseInt(displayData);
+                      const formatted: string = parsed.toFixed(14);
+
+                      return (
+                        <ListItemText primary={formatted} secondary="Reserves (ETH)" />
+                      )
+                    }}
+                  />
                 )}
               </ListItem>
               <ListItem>
@@ -256,17 +280,33 @@ const Exchange: Function = ({
                     <AccountBalanceIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {tokenSupply != null && (
-                  <ListItemText primary={tokenSupply} secondary="Reserves (Exchange Tokens)" />
+                {initialized && (
+                  <ContractData
+                    drizzle={drizzle}
+                    drizzleState={drizzleState}
+                    contract="ExchangeToken"
+                    method="getSupply"
+                    methodArgs={[{from: account}]}
+                    render={(displayData: any) => {
+                      const parsed: number = parseInt(displayData);
+                      const formatted: string = parsed.toFixed(14);
+
+                      return (
+                        <ListItemText primary={formatted} secondary="Reserves (Exchange Tokens)" />
+                      )
+                    }}
+                  />
                 )}
               </ListItem>
+
               <ListItem>
+
                 <ListItemAvatar>
                   <Avatar>
                     <BarChartIcon />
                   </Avatar>
                 </ListItemAvatar>
-                {tokenSupply != null && (
+                {initialized && (
                   <ListItemText primary="1.0" secondary="Exchange Token Price (Exchange Token/ETH)" />
                 )}
               </ListItem>
@@ -284,7 +324,7 @@ const Exchange: Function = ({
           {initialized && (
             <ContractForm
               drizzle={drizzle}
-              contract="MarketToken"
+              contract="ExchangeToken"
               method="buy"
               sendArgs={ { from: account, value: 1 } }
               render={ (options: any) => {
@@ -300,7 +340,7 @@ const Exchange: Function = ({
           {initialized && (
             <ContractForm
               drizzle={drizzle}
-              contract="MarketToken"
+              contract="ExchangeToken"
               method="sell"
               sendArgs={ { from: account, value: 1 } }
               render={ (options: any) => {
@@ -317,12 +357,6 @@ const Exchange: Function = ({
         </CardActions>
 
         <Container>
-          {initialized &&
-            account &&
-            accountTokenBalance == null &&
-            transactionId == null && (
-              <Typography>Please buy credits</Typography>
-            )}
           {!initialized ||
             (!account && (
               <Typography>Please connect your web wallet.</Typography>

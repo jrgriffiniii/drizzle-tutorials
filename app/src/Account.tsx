@@ -41,8 +41,8 @@ const Account: Function = ({
   const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
   const [tokenSupply, setTokenSupply] = useState<string | null>(null);
 
-  const [MarketTokenKey, setMarketTokenKey] = useState<string | null>(null);
-  const [MarketTokenBalance, setMarketTokenBalance] = useState<string | null>(
+  const [ExchangeTokenKey, setExchangeTokenKey] = useState<string | null>(null);
+  const [ExchangeTokenBalance, setExchangeTokenBalance] = useState<string | null>(
     null
   );
 
@@ -86,16 +86,16 @@ const Account: Function = ({
         }
       }
 
-      const MarketTokenState: any = drizzleState.contracts.MarketToken;
-      const MarketToken: any = drizzle.contracts.MarketToken;
+      const ExchangeTokenState: any = drizzleState.contracts.ExchangeToken;
+      const ExchangeToken: any = drizzle.contracts.ExchangeToken;
 
       if (tokenSupplyKey == null || tokenSupply == null) {
-        const key = MarketToken.methods['getSupply'].cacheCall({
+        const key = ExchangeToken.methods['getSupply'].cacheCall({
           from: account,
         });
 
-        if (MarketTokenState.getSupply.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getSupply[key] || 0.0;
+        if (ExchangeTokenState.getSupply.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getSupply[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
@@ -106,19 +106,19 @@ const Account: Function = ({
         }
       }
 
-      if (MarketTokenKey == null || MarketTokenBalance == null) {
-        const key = MarketToken.methods['getBalance'].cacheCall(account, {
+      if (ExchangeTokenKey == null || ExchangeTokenBalance == null) {
+        const key = ExchangeToken.methods['getBalance'].cacheCall(account, {
           from: account,
         });
 
-        if (MarketTokenState.getBalance.hasOwnProperty(key)) {
-          let cached: any = MarketTokenState.getBalance[key] || 0.0;
+        if (ExchangeTokenState.getBalance.hasOwnProperty(key)) {
+          let cached: any = ExchangeTokenState.getBalance[key] || 0.0;
           cached = parseInt(cached.value);
           cached = cached.toFixed(14);
 
-          if (cached != MarketTokenBalance) {
-            setMarketTokenBalance(cached);
-            setMarketTokenKey(key);
+          if (cached != ExchangeTokenBalance) {
+            setExchangeTokenBalance(cached);
+            setExchangeTokenKey(key);
           }
         }
       }
@@ -179,7 +179,7 @@ const Account: Function = ({
                 <ContractData
                   drizzle={drizzle}
                   drizzleState={drizzleState}
-                  contract="MarketToken"
+                  contract="ExchangeToken"
                   method="getBalance"
                   methodArgs={[account, { from: account }]}
                   render={(displayData: any) => {

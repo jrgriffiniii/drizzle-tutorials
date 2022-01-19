@@ -3,7 +3,7 @@ import React from 'react';
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from '@drizzle/store';
 
-import GameToken from './contracts/MarketToken.json';
+import ExchangeToken from './contracts/ExchangeToken.json';
 import CornContract from './contracts/CornContract.json';
 
 import store from './middleware';
@@ -13,7 +13,7 @@ import Home from './Home';
 import './App.scss';
 
 const drizzleOptions: any = {
-  contracts: [GameToken, CornContract],
+  contracts: [ExchangeToken, CornContract],
   web3: {
     fallback: {
       type: 'ws',

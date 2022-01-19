@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.7;
 
-contract MarketToken {
+contract ExchangeToken {
     uint256 public constant MAX_BALANCE = 1000;
 
     address private deployed;

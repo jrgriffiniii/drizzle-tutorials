@@ -7,6 +7,11 @@ contract CommodityContract {
 
     address private deployed;
     mapping(address => uint256) balances;
+    /*
+    uint256 public months;
+    uint256 public bid_price;
+    uint256 public ask_price;
+    */
 
     event Received(address, uint256);
     event Fallback(address, uint256);
@@ -45,13 +50,11 @@ contract CommodityContract {
         balances[msg.sender] += amount;
     }
 
-    function sell() external payable returns (uint256) {
+    function sell() external payable {
         address payable seller = payable(msg.sender);
         uint256 amount = msg.value;
 
-        balances[deployed] += amount;
         balances[msg.sender] -= amount;
-
-        return seller.balance;
+        balances[deployed] += amount;
     }
 }
