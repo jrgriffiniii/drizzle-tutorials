@@ -6,6 +6,15 @@ import "../contracts/CommodityContract.sol";
 
 contract CornContract is CommodityContract {
 
+  constructor(string[] memory _months) CommodityContract(_months) {}
+
+  function getBidPrice(string memory month) external view returns (uint256) {
+      return 1;
+  }
+
+  function getSellPrice(string memory month) external view returns (uint256) {
+      return 2;
+  }
 }
 
 /*

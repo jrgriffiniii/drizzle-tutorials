@@ -42,40 +42,17 @@ const Exchange: Function = ({
   drizzleState,
   initialized,
 }: ExchangeProps) => {
-  const [account, setAccount] = useState<string | null>(null);
-
-  const [cornContractKey, setCornContractKey] = useState<string | null>(null);
-  const [cornContractBalance, setCornContractBalance] = useState<string | null>(
-    null
-  );
-
-  const [tokenSupplyKey, setTokenSupplyKey] = useState<string | null>(null);
-  const [tokenSupply, setTokenSupply] = useState<string | null>(null);
-
-  const [accountTokenKey, setExchangeTokenKey] = useState<string | null>(null);
-  const [accountTokenBalance, setExchangeTokenBalance] = useState<string | null>(
-    null
-  );
-
-  const [exchangeReservesKey, setExchangeReservesKey] = useState<string | null>(
-    null
-  );
-  const [exchangeReserves, setExchangeReserves] = useState<string | null>(null);
 
   const [transactionId, setTransactionId] = useState<any | null>(null);
-  const [transaction, setTransaction] = useState<null | null>(null);
   const [transactionHash, setTransactionHash] = useState<null | null>(null);
-  const [transactionStatus, setTransactionStatus] = useState<null | null>(null);
 
   useEffect(() => {
     const walletConnected: boolean =
-      initialized && !account && Object.keys(drizzleState.accounts).length > 0;
+      initialized && Object.keys(drizzleState.accounts).length > 0;
 
     if (walletConnected) {
       // If the wallet is connected for the first time, store the account
-      const clientAccount: string = drizzleState.accounts[0];
-      setAccount(clientAccount);
-    } else if (initialized && account) {
+    } else if (initialized) {
       // This handles the state for the interactions between the Ethereum network, contracts, and React
       if (transactionId != null && transactionHash == null) {
         const { transactions, transactionStack } = drizzleState;
@@ -184,48 +161,6 @@ const Exchange: Function = ({
     }
   });
 
-  const buyToken: any = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    if (account) {
-      const ExchangeToken = drizzle.contracts.ExchangeToken;
-      // @todo this should be a variable
-      const creditAmount: number = 1;
-
-      // This submits a transaction to purchase a token from the exchange
-      const stackId: any = ExchangeToken.methods['purchase'].cacheSend({
-        from: account,
-        value: creditAmount,
-      });
-
-      setExchangeTokenKey(null);
-      setTokenSupplyKey(null);
-      setTransactionId(stackId);
-    }
-  };
-
-  const sellToken: any = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>
-  ): void => {
-    if (account) {
-      const ExchangeToken = drizzle.contracts.ExchangeToken;
-      // @todo this should be a variable
-      const creditAmount: number = 1;
-
-      const stackId: any = ExchangeToken.methods['sell'].cacheSend(
-        account,
-        creditAmount,
-        {
-          from: account,
-        }
-      );
-
-      setExchangeTokenKey(null);
-      setTokenSupplyKey(null);
-      setTransactionId(stackId);
-    }
-  };
-
   return (
     <>
       <Card>
@@ -263,7 +198,7 @@ const Exchange: Function = ({
                     drizzleState={drizzleState}
                     contract="ExchangeToken"
                     method="getDeposited"
-                    methodArgs={[{from: account}]}
+                    methodArgs={[{from: drizzleState.accounts[0]}]}
                     render={(displayData: any) => {
 
                       let parsed: number;
@@ -293,7 +228,7 @@ const Exchange: Function = ({
                     drizzleState={drizzleState}
                     contract="ExchangeToken"
                     method="getSupply"
-                    methodArgs={[{from: account}]}
+                    methodArgs={[{from: drizzleState.accounts[0]}]}
                     render={(displayData: any) => {
                       let parsed: number;
                       if(displayData != null) {
@@ -337,7 +272,7 @@ const Exchange: Function = ({
               drizzle={drizzle}
               contract="ExchangeToken"
               method="buy"
-              sendArgs={ { from: account, value: 1 } }
+              sendArgs={ { from: drizzleState.accounts[0], value: 1 } }
               render={ (options: any) => {
 
                 return (
@@ -367,9 +302,8 @@ const Exchange: Function = ({
               method="sell"
               sendArgs={ { from: drizzleState.accounts[0], value: 1 } }
               render={ (options: any) => {
-                console.log(options.state)
+                // I am not certain why this override is needed
                 options.state['seller'] = drizzleState.accounts[0]
-                console.log(options.state)
 
                 return (
                   <form className="market-token-form" onSubmit={options.handleSubmit}>
@@ -392,13 +326,6 @@ const Exchange: Function = ({
             />
           )}
         </CardActions>
-
-        <Container>
-          {!initialized ||
-            (!account && (
-              <Typography>Please connect your web wallet.</Typography>
-            ))}
-        </Container>
       </Card>
     </>
   );

@@ -60,8 +60,8 @@ contract ExchangeToken {
         (bool sent, bytes memory data) = seller.call{value: amount}("");
 
         //require( balances[deployed] - msg.value <= msg.value, "Not enough tokens available for the seller account." );
-        balances[deployed] += amount;
         balances[seller] -= amount;
+        balances[deployed] += amount;
 
         return sent;
     }
