@@ -9582,12 +9582,8 @@
   "ast": {
     "absolutePath": "project:/contracts/CornContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        323
-      ],
-      "CornContract": [
-        371
-      ]
+      "CommodityContract": [323],
+      "CornContract": [371]
     },
     "id": 372,
     "license": "MIT",
@@ -9595,12 +9591,7 @@
     "nodes": [
       {
         "id": 325,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:1"
       },
@@ -9636,10 +9627,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 371,
-        "linearizedBaseContracts": [
-          371,
-          323
-        ],
+        "linearizedBaseContracts": [371, 323],
         "name": "CornContract",
         "nameLocation": "113:12:1",
         "nodeType": "ContractDefinition",
@@ -9748,9 +9736,7 @@
               "src": "299:70:1",
               "statements": [
                 {
-                  "assignments": [
-                    346
-                  ],
+                  "assignments": [346],
                   "declarations": [
                     {
                       "constant": false,
@@ -9930,9 +9916,7 @@
               "src": "449:70:1",
               "statements": [
                 {
-                  "assignments": [
-                    362
-                  ],
+                  "assignments": [362],
                   "declarations": [
                     {
                       "constant": false,
@@ -10116,12 +10100,8 @@
   "legacyAST": {
     "absolutePath": "project:/contracts/CornContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        323
-      ],
-      "CornContract": [
-        371
-      ]
+      "CommodityContract": [323],
+      "CornContract": [371]
     },
     "id": 372,
     "license": "MIT",
@@ -10129,12 +10109,7 @@
     "nodes": [
       {
         "id": 325,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:1"
       },
@@ -10170,10 +10145,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 371,
-        "linearizedBaseContracts": [
-          371,
-          323
-        ],
+        "linearizedBaseContracts": [371, 323],
         "name": "CornContract",
         "nameLocation": "113:12:1",
         "nodeType": "ContractDefinition",
@@ -10282,9 +10254,7 @@
               "src": "299:70:1",
               "statements": [
                 {
-                  "assignments": [
-                    346
-                  ],
+                  "assignments": [346],
                   "declarations": [
                     {
                       "constant": false,
@@ -10464,9 +10434,7 @@
               "src": "449:70:1",
               "statements": [
                 {
-                  "assignments": [
-                    362
-                  ],
+                  "assignments": [362],
                   "declarations": [
                     {
                       "constant": false,

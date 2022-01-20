@@ -263,7 +263,6 @@ const Market: Function = ({
             </TableHead>
             <TableBody>
               {initialized && (
-
                 <ContractData
                   drizzle={drizzle}
                   drizzleState={drizzleState}
@@ -271,83 +270,74 @@ const Market: Function = ({
                   method="getMonths"
                   methodArgs={[{ from: drizzleState.accounts[0] }]}
                   render={(displayData: any) => {
-
                     console.log(displayData);
-                    return (
+                    return displayData.map((month: any, key: number) => {
+                      console.log(month);
+                      console.log(key);
+                      return (
+                        <TableRow key={key}>
+                          <TableCell align="right">{month}</TableCell>
+                          <ContractData
+                            drizzle={drizzle}
+                            drizzleState={drizzleState}
+                            contract="CornContract"
+                            method="getBidPrice"
+                            methodArgs={[
+                              month,
+                              { from: drizzleState.accounts[0] },
+                            ]}
+                            render={(displayData: any) => {
+                              let parsed: number;
+                              if (displayData != null) {
+                                parsed = parseInt(displayData);
+                              } else {
+                                parsed = 0;
+                              }
+                              const formatted: string = parsed.toFixed(14);
 
-                      displayData.map((month: any, key: number) => {
+                              return (
+                                <TableCell align="right">{formatted}</TableCell>
+                              );
+                            }}
+                          />
+                          <ContractData
+                            drizzle={drizzle}
+                            drizzleState={drizzleState}
+                            contract="CornContract"
+                            method="getAskPrice"
+                            methodArgs={[
+                              month,
+                              { from: drizzleState.accounts[0] },
+                            ]}
+                            render={(displayData: any) => {
+                              let parsed: number;
+                              if (displayData != null) {
+                                parsed = parseInt(displayData);
+                              } else {
+                                parsed = 0;
+                              }
+                              const formatted: string = parsed.toFixed(14);
 
-                        console.log(month);
-                        console.log(key);
-                        return (
-
-                          <TableRow key={key}>
-                            <TableCell align="right">
-                            {month}
-                            </TableCell>
-                            <ContractData
-                              drizzle={drizzle}
-                              drizzleState={drizzleState}
-                              contract="CornContract"
-                              method="getBidPrice"
-                              methodArgs={[
-                                month,
-                                { from: drizzleState.accounts[0] },
-                              ]}
-                              render={(displayData: any) => {
-
-                                let parsed: number;
-                                if (displayData != null) {
-                                  parsed = parseInt(displayData);
-                                } else {
-                                  parsed = 0;
-                                }
-                                const formatted: string = parsed.toFixed(14);
-
-                                return (
-                                  <TableCell align="right">{formatted}</TableCell>
-                                )
-                              }}
-                            />
-                            <ContractData
-                              drizzle={drizzle}
-                              drizzleState={drizzleState}
-                              contract="CornContract"
-                              method="getAskPrice"
-                              methodArgs={[
-                                month,
-                                { from: drizzleState.accounts[0] },
-                              ]}
-                              render={(displayData: any) => {
-
-                                let parsed: number;
-                                if (displayData != null) {
-                                  parsed = parseInt(displayData);
-                                } else {
-                                  parsed = 0;
-                                }
-                                const formatted: string = parsed.toFixed(14);
-
-                                return (
-                                  <TableCell align="right">{formatted}</TableCell>
-                                )
-                              }}
-                            />
-                            <TableCell align="right">
-                              <Button color="primary" variant="contained">
-                                Buy
-                              </Button>
-                            </TableCell>
-                            <TableCell align="right">
-                              <Button color="secondary" variant="contained">
-                                Sell
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                          )})
-                          
-                          )}
-                        }/>
+                              return (
+                                <TableCell align="right">{formatted}</TableCell>
+                              );
+                            }}
+                          />
+                          <TableCell align="right">
+                            <Button color="primary" variant="contained">
+                              Buy
+                            </Button>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button color="secondary" variant="contained">
+                              Sell
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    });
+                  }}
+                />
               )}
             </TableBody>
           </Table>
