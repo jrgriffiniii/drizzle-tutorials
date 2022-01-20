@@ -42,7 +42,6 @@ const Exchange: Function = ({
   drizzleState,
   initialized,
 }: ExchangeProps) => {
-
   const [transactionId, setTransactionId] = useState<any | null>(null);
   const [transactionHash, setTransactionHash] = useState<null | null>(null);
 
@@ -183,7 +182,10 @@ const Exchange: Function = ({
                   </Avatar>
                 </ListItemAvatar>
                 {initialized && (
-                  <ListItemText primary={drizzle.contracts.ExchangeToken.address} secondary="Address" />
+                  <ListItemText
+                    primary={drizzle.contracts.ExchangeToken.address}
+                    secondary="Address"
+                  />
                 )}
               </ListItem>
               <ListItem>
@@ -198,11 +200,10 @@ const Exchange: Function = ({
                     drizzleState={drizzleState}
                     contract="ExchangeToken"
                     method="getDeposited"
-                    methodArgs={[{from: drizzleState.accounts[0]}]}
+                    methodArgs={[{ from: drizzleState.accounts[0] }]}
                     render={(displayData: any) => {
-
                       let parsed: number;
-                      if(displayData != null) {
+                      if (displayData != null) {
                         parsed = parseInt(displayData);
                       } else {
                         parsed = 0;
@@ -210,8 +211,11 @@ const Exchange: Function = ({
                       const formatted: string = parsed.toFixed(14);
 
                       return (
-                        <ListItemText primary={formatted} secondary="Reserves (ETH)" />
-                      )
+                        <ListItemText
+                          primary={formatted}
+                          secondary="Reserves (ETH)"
+                        />
+                      );
                     }}
                   />
                 )}
@@ -228,10 +232,10 @@ const Exchange: Function = ({
                     drizzleState={drizzleState}
                     contract="ExchangeToken"
                     method="getSupply"
-                    methodArgs={[{from: drizzleState.accounts[0]}]}
+                    methodArgs={[{ from: drizzleState.accounts[0] }]}
                     render={(displayData: any) => {
                       let parsed: number;
-                      if(displayData != null) {
+                      if (displayData != null) {
                         parsed = parseInt(displayData);
                       } else {
                         parsed = 0;
@@ -239,22 +243,27 @@ const Exchange: Function = ({
                       const formatted: string = parsed.toFixed(14);
 
                       return (
-                        <ListItemText primary={formatted} secondary="Reserves (Exchange Tokens)" />
-                      )
+                        <ListItemText
+                          primary={formatted}
+                          secondary="Reserves (Exchange Tokens)"
+                        />
+                      );
                     }}
                   />
                 )}
               </ListItem>
 
               <ListItem>
-
                 <ListItemAvatar>
                   <Avatar>
                     <BarChartIcon />
                   </Avatar>
                 </ListItemAvatar>
                 {initialized && (
-                  <ListItemText primary="1.0" secondary="Exchange Token Price (Exchange Token/ETH)" />
+                  <ListItemText
+                    primary="1.0"
+                    secondary="Exchange Token Price (Exchange Token/ETH)"
+                  />
                 )}
               </ListItem>
             </List>
@@ -266,18 +275,19 @@ const Exchange: Function = ({
           )}
         </CardContent>
         <CardActions>
-
           {initialized && (
             <ContractForm
               drizzle={drizzle}
               contract="ExchangeToken"
               method="buy"
-              sendArgs={ { from: drizzleState.accounts[0], value: 1 } }
-              render={ (options: any) => {
-
+              sendArgs={{ from: drizzleState.accounts[0], value: 1 }}
+              render={(options: any) => {
                 return (
-                  <form className="market-token-form" onSubmit={options.handleSubmit}>
-                    { options.inputs.map((input: any, index: any) => {
+                  <form
+                    className="market-token-form"
+                    onSubmit={options.handleSubmit}
+                  >
+                    {options.inputs.map((input: any, index: any) => {
                       return (
                         <input
                           key={input.name}
@@ -287,11 +297,16 @@ const Exchange: Function = ({
                         />
                       );
                     })}
-                    <Button className="market-token__buy-button" color="primary" variant="contained" type="submit">
+                    <Button
+                      className="market-token__buy-button"
+                      color="primary"
+                      variant="contained"
+                      type="submit"
+                    >
                       Stake
                     </Button>
                   </form>
-                )
+                );
               }}
             />
           )}
@@ -300,14 +315,17 @@ const Exchange: Function = ({
               drizzle={drizzle}
               contract="ExchangeToken"
               method="sell"
-              sendArgs={ { from: drizzleState.accounts[0], value: 1 } }
-              render={ (options: any) => {
+              sendArgs={{ from: drizzleState.accounts[0], value: 1 }}
+              render={(options: any) => {
                 // I am not certain why this override is needed
-                options.state['seller'] = drizzleState.accounts[0]
+                options.state['seller'] = drizzleState.accounts[0];
 
                 return (
-                  <form className="market-token-form" onSubmit={options.handleSubmit}>
-                    { options.inputs.map((input: any, index: any) => {
+                  <form
+                    className="market-token-form"
+                    onSubmit={options.handleSubmit}
+                  >
+                    {options.inputs.map((input: any, index: any) => {
                       return (
                         <input
                           key={input.name}
@@ -317,11 +335,16 @@ const Exchange: Function = ({
                         />
                       );
                     })}
-                    <Button className="market-token__sell-button" color="secondary" variant="contained" type="submit">
+                    <Button
+                      className="market-token__sell-button"
+                      color="secondary"
+                      variant="contained"
+                      type="submit"
+                    >
                       Withdraw
                     </Button>
                   </form>
-                )
+                );
               }}
             />
           )}

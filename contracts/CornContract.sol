@@ -5,16 +5,15 @@ pragma solidity ^0.8.7;
 import "../contracts/CommodityContract.sol";
 
 contract CornContract is CommodityContract {
+    constructor(string[] memory _months) CommodityContract(_months) {}
 
-  constructor(string[] memory _months) CommodityContract(_months) {}
+    function getBidPrice(string memory month) external view returns (uint256) {
+        return 1;
+    }
 
-  function getBidPrice(string memory month) external view returns (uint256) {
-      return 1;
-  }
-
-  function getSellPrice(string memory month) external view returns (uint256) {
-      return 2;
-  }
+    function getSellPrice(string memory month) external view returns (uint256) {
+        return 2;
+    }
 }
 
 /*

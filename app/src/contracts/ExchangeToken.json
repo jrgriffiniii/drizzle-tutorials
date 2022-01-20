@@ -1247,9 +1247,7 @@
   "ast": {
     "absolutePath": "project:/contracts/ExchangeToken.sol",
     "exportedSymbols": {
-      "ExchangeToken": [
-        463
-      ]
+      "ExchangeToken": [463]
     },
     "id": 464,
     "license": "MIT",
@@ -1257,12 +1255,7 @@
     "nodes": [
       {
         "id": 311,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:2"
       },
@@ -1273,9 +1266,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 463,
-        "linearizedBaseContracts": [
-          463
-        ],
+        "linearizedBaseContracts": [463],
         "name": "ExchangeToken",
         "nameLocation": "67:13:2",
         "nodeType": "ContractDefinition",
@@ -2330,9 +2321,7 @@
               "src": "909:397:2",
               "statements": [
                 {
-                  "assignments": [
-                    406
-                  ],
+                  "assignments": [406],
                   "declarations": [
                     {
                       "constant": false,
@@ -2577,9 +2566,7 @@
               "src": "1374:673:2",
               "statements": [
                 {
-                  "assignments": [
-                    432
-                  ],
+                  "assignments": [432],
                   "declarations": [
                     {
                       "constant": false,
@@ -2640,10 +2627,7 @@
                   "src": "1384:26:2"
                 },
                 {
-                  "assignments": [
-                    437,
-                    439
-                  ],
+                  "assignments": [437, 439],
                   "declarations": [
                     {
                       "constant": false,
@@ -2764,9 +2748,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {
@@ -3056,9 +3038,7 @@
   "legacyAST": {
     "absolutePath": "project:/contracts/ExchangeToken.sol",
     "exportedSymbols": {
-      "ExchangeToken": [
-        463
-      ]
+      "ExchangeToken": [463]
     },
     "id": 464,
     "license": "MIT",
@@ -3066,12 +3046,7 @@
     "nodes": [
       {
         "id": 311,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:2"
       },
@@ -3082,9 +3057,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 463,
-        "linearizedBaseContracts": [
-          463
-        ],
+        "linearizedBaseContracts": [463],
         "name": "ExchangeToken",
         "nameLocation": "67:13:2",
         "nodeType": "ContractDefinition",
@@ -4139,9 +4112,7 @@
               "src": "909:397:2",
               "statements": [
                 {
-                  "assignments": [
-                    406
-                  ],
+                  "assignments": [406],
                   "declarations": [
                     {
                       "constant": false,
@@ -4386,9 +4357,7 @@
               "src": "1374:673:2",
               "statements": [
                 {
-                  "assignments": [
-                    432
-                  ],
+                  "assignments": [432],
                   "declarations": [
                     {
                       "constant": false,
@@ -4449,10 +4418,7 @@
                   "src": "1384:26:2"
                 },
                 {
-                  "assignments": [
-                    437,
-                    439
-                  ],
+                  "assignments": [437, 439],
                   "declarations": [
                     {
                       "constant": false,
@@ -4573,9 +4539,7 @@
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
-                      "names": [
-                        "value"
-                      ],
+                      "names": ["value"],
                       "nodeType": "FunctionCallOptions",
                       "options": [
                         {

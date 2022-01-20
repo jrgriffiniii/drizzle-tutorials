@@ -23,7 +23,7 @@ abstract contract CommodityContract {
         deployed = address(this);
         months = _months;
 
-        for (uint i = 0; i < months.length; i++) {
+        for (uint256 i = 0; i < months.length; i++) {
             balances[deployed][months[i]] = 0;
         }
     }
@@ -45,8 +45,8 @@ abstract contract CommodityContract {
     }
 
     function getTotalSupply() external view returns (uint256) {
-        uint _supply = 0;
-        for (uint i = 0; i < months.length; i++) {
+        uint256 _supply = 0;
+        for (uint256 i = 0; i < months.length; i++) {
             _supply += balances[deployed][months[i]];
         }
 
@@ -54,16 +54,20 @@ abstract contract CommodityContract {
     }
 
     function getTotalBalance(address owner) external view returns (uint256) {
-        uint _balance = 0;
-        for (uint i = 0; i < months.length; i++) {
+        uint256 _balance = 0;
+        for (uint256 i = 0; i < months.length; i++) {
             _balance += balances[owner][months[i]];
         }
 
         return _balance;
     }
 
-    function getBalance(address owner, string memory month) external view returns (uint256) {
-        uint _balance = balances[owner][month];
+    function getBalance(address owner, string memory month)
+        external
+        view
+        returns (uint256)
+    {
+        uint256 _balance = balances[owner][month];
 
         return _balance;
     }

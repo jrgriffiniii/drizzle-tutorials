@@ -21,7 +21,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 
-
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -143,8 +142,8 @@ const Market: Function = ({
       quantity: 1,
       measurement: 'bushel',
       gtin: '7-25272-73070-6',
-    }
-  ]
+    },
+  ];
   const productsFull: any[] = [
     {
       name: '☕',
@@ -181,25 +180,46 @@ const Market: Function = ({
   ];
 
   const rows = [
-    { id: 1, symbol: 'Corn', month: { symbol: 'MAR 2022', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
-    { id: 2, symbol: 'Corn', month: { symbol: 'MAY 2022', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
-    { id: 3, symbol: 'Corn', month: { symbol: 'MAR 2023', url: "https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html" }, bid: 1.0, ask: 2.0 },
+    {
+      id: 1,
+      symbol: 'Corn',
+      month: {
+        symbol: 'MAR 2022',
+        url: 'https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html',
+      },
+      bid: 1.0,
+      ask: 2.0,
+    },
+    {
+      id: 2,
+      symbol: 'Corn',
+      month: {
+        symbol: 'MAY 2022',
+        url: 'https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html',
+      },
+      bid: 1.0,
+      ask: 2.0,
+    },
+    {
+      id: 3,
+      symbol: 'Corn',
+      month: {
+        symbol: 'MAR 2023',
+        url: 'https://www.cmegroup.com/markets/agriculture/grains/corn.quotes.html',
+      },
+      bid: 1.0,
+      ask: 2.0,
+    },
   ];
 
   const items = rows.map((row: any, key: number) => {
     return (
       <TableRow key={key}>
         <TableCell align="right">
-          <a href={row.month.url}>
-            {row.month.symbol}
-          </a>
+          <a href={row.month.url}>{row.month.symbol}</a>
         </TableCell>
-        <TableCell align="right">
-          {row.bid}
-        </TableCell>
-        <TableCell align="right">
-          {row.ask}
-        </TableCell>
+        <TableCell align="right">{row.bid}</TableCell>
+        <TableCell align="right">{row.ask}</TableCell>
         <TableCell align="right">
           <Button color="primary" variant="contained">
             Buy
@@ -215,35 +235,33 @@ const Market: Function = ({
   });
 
   return (
-      <Card>
-        <CardContent>
-          <Typography
-            variant="h4"
-            component="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Corn Futures
-          </Typography>
-    <TableContainer component={Paper}>
-      <Table aria-label="orders table">
-        <caption>Commodity Futures Contracts</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell align="right">Month</TableCell>
-            <TableCell align="right">Bid Price (ETH)</TableCell>
-            <TableCell align="right">Ask Price (ETH)</TableCell>
-            <TableCell align="right"></TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {items}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    </CardContent>
+    <Card>
+      <CardContent>
+        <Typography
+          variant="h4"
+          component="h2"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Corn Futures
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table aria-label="orders table">
+            <caption>Commodity Futures Contracts</caption>
+            <TableHead>
+              <TableRow>
+                <TableCell align="right">Month</TableCell>
+                <TableCell align="right">Bid Price (ETH)</TableCell>
+                <TableCell align="right">Ask Price (ETH)</TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right"></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{items}</TableBody>
+          </Table>
+        </TableContainer>
+      </CardContent>
     </Card>
   );
 };

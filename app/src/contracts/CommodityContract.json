@@ -211,9 +211,7 @@
   "ast": {
     "absolutePath": "project:/contracts/CommodityContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        273
-      ]
+      "CommodityContract": [273]
     },
     "id": 274,
     "license": "MIT",
@@ -221,12 +219,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -237,9 +230,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 273,
-        "linearizedBaseContracts": [
-          273
-        ],
+        "linearizedBaseContracts": [273],
         "name": "CommodityContract",
         "nameLocation": "76:17:0",
         "nodeType": "ContractDefinition",
@@ -1016,9 +1007,7 @@
                   },
                   "id": 78,
                   "initializationExpression": {
-                    "assignments": [
-                      57
-                    ],
+                    "assignments": [57],
                     "declarations": [
                       {
                         "constant": false,
@@ -1617,9 +1606,7 @@
               "src": "1182:173:0",
               "statements": [
                 {
-                  "assignments": [
-                    126
-                  ],
+                  "assignments": [126],
                   "declarations": [
                     {
                       "constant": false,
@@ -1853,9 +1840,7 @@
                   },
                   "id": 151,
                   "initializationExpression": {
-                    "assignments": [
-                      130
-                    ],
+                    "assignments": [130],
                     "declarations": [
                       {
                         "constant": false,
@@ -2021,9 +2006,7 @@
               "src": "1433:173:0",
               "statements": [
                 {
-                  "assignments": [
-                    163
-                  ],
+                  "assignments": [163],
                   "declarations": [
                     {
                       "constant": false,
@@ -2257,9 +2240,7 @@
                   },
                   "id": 188,
                   "initializationExpression": {
-                    "assignments": [
-                      167
-                    ],
+                    "assignments": [167],
                     "declarations": [
                       {
                         "constant": false,
@@ -2454,9 +2435,7 @@
               "src": "1700:81:0",
               "statements": [
                 {
-                  "assignments": [
-                    202
-                  ],
+                  "assignments": [202],
                   "declarations": [
                     {
                       "constant": false,
@@ -2689,9 +2668,7 @@
               "src": "1854:258:0",
               "statements": [
                 {
-                  "assignments": [
-                    220
-                  ],
+                  "assignments": [220],
                   "declarations": [
                     {
                       "constant": false,
@@ -3042,9 +3019,7 @@
               "src": "2185:341:0",
               "statements": [
                 {
-                  "assignments": [
-                    250
-                  ],
+                  "assignments": [250],
                   "declarations": [
                     {
                       "constant": false,
@@ -3399,9 +3374,7 @@
   "legacyAST": {
     "absolutePath": "project:/contracts/CommodityContract.sol",
     "exportedSymbols": {
-      "CommodityContract": [
-        273
-      ]
+      "CommodityContract": [273]
     },
     "id": 274,
     "license": "MIT",
@@ -3409,12 +3382,7 @@
     "nodes": [
       {
         "id": 1,
-        "literals": [
-          "solidity",
-          "^",
-          "0.8",
-          ".7"
-        ],
+        "literals": ["solidity", "^", "0.8", ".7"],
         "nodeType": "PragmaDirective",
         "src": "33:23:0"
       },
@@ -3425,9 +3393,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 273,
-        "linearizedBaseContracts": [
-          273
-        ],
+        "linearizedBaseContracts": [273],
         "name": "CommodityContract",
         "nameLocation": "76:17:0",
         "nodeType": "ContractDefinition",
@@ -4204,9 +4170,7 @@
                   },
                   "id": 78,
                   "initializationExpression": {
-                    "assignments": [
-                      57
-                    ],
+                    "assignments": [57],
                     "declarations": [
                       {
                         "constant": false,
@@ -4805,9 +4769,7 @@
               "src": "1182:173:0",
               "statements": [
                 {
-                  "assignments": [
-                    126
-                  ],
+                  "assignments": [126],
                   "declarations": [
                     {
                       "constant": false,
@@ -5041,9 +5003,7 @@
                   },
                   "id": 151,
                   "initializationExpression": {
-                    "assignments": [
-                      130
-                    ],
+                    "assignments": [130],
                     "declarations": [
                       {
                         "constant": false,
@@ -5209,9 +5169,7 @@
               "src": "1433:173:0",
               "statements": [
                 {
-                  "assignments": [
-                    163
-                  ],
+                  "assignments": [163],
                   "declarations": [
                     {
                       "constant": false,
@@ -5445,9 +5403,7 @@
                   },
                   "id": 188,
                   "initializationExpression": {
-                    "assignments": [
-                      167
-                    ],
+                    "assignments": [167],
                     "declarations": [
                       {
                         "constant": false,
@@ -5642,9 +5598,7 @@
               "src": "1700:81:0",
               "statements": [
                 {
-                  "assignments": [
-                    202
-                  ],
+                  "assignments": [202],
                   "declarations": [
                     {
                       "constant": false,
@@ -5877,9 +5831,7 @@
               "src": "1854:258:0",
               "statements": [
                 {
-                  "assignments": [
-                    220
-                  ],
+                  "assignments": [220],
                   "declarations": [
                     {
                       "constant": false,
@@ -6230,9 +6182,7 @@
               "src": "2185:341:0",
               "statements": [
                 {
-                  "assignments": [
-                    250
-                  ],
+                  "assignments": [250],
                   "declarations": [
                     {
                       "constant": false,

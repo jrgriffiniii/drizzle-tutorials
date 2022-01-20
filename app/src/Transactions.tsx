@@ -38,51 +38,43 @@ const Transactions: Function = ({
   let items: any = [];
 
   if (initialized) {
-
-  items = drizzleState.transactionStack.map((txId: any) => {
-    if (drizzleState.transactions[txId]) {
+    items = drizzleState.transactionStack.map((txId: any) => {
+      if (drizzleState.transactions[txId]) {
         return (
           <TableRow key={txId}>
-            <TableCell>
-              {txId}
-            </TableCell>
-            <TableCell>
-              {drizzleState.transactions[txId].status}
-            </TableCell>
+            <TableCell>{txId}</TableCell>
+            <TableCell>{drizzleState.transactions[txId].status}</TableCell>
           </TableRow>
         );
-        
       }
-  });
+    });
   }
 
   return (
-      <Card>
-        <CardContent>
-          <Typography
-            variant="h3"
-            component="h3"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Transactions
-          </Typography>
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table">
-        <caption>Transactions</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>Transaction Hash</TableCell>
-            <TableCell align="right">Status</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { initialized && items }
-        </TableBody>
-        </Table>
-    </TableContainer>
-    </CardContent>
+    <Card>
+      <CardContent>
+        <Typography
+          variant="h3"
+          component="h3"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          Transactions
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <caption>Transactions</caption>
+            <TableHead>
+              <TableRow>
+                <TableCell>Transaction Hash</TableCell>
+                <TableCell align="right">Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{initialized && items}</TableBody>
+          </Table>
+        </TableContainer>
+      </CardContent>
     </Card>
   );
 };

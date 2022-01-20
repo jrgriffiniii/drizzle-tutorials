@@ -30,7 +30,6 @@ const Account: Function = ({
   drizzleState,
   initialized,
 }: AccountProps) => {
-
   useEffect(() => {
     if (initialized) {
       console.log(drizzle);
@@ -117,17 +116,14 @@ const Account: Function = ({
           </Typography>
           <nav>
             <List>
-              {initialized && 
-              (
-
-              
-              <AccountData
+              {initialized && (
+                <AccountData
                   drizzle={drizzle}
                   drizzleState={drizzleState}
                   accountIndex={0}
                   render={(account: any) => {
                     let parsed: number;
-                    if(account.balance != null) {
+                    if (account.balance != null) {
                       parsed = parseInt(account.balance) / 1.0e18;
                     } else {
                       parsed = 0;
@@ -142,7 +138,10 @@ const Account: Function = ({
                               <AccountCircleIcon />
                             </Avatar>
                           </ListItemAvatar>
-                            <ListItemText primary={account.address} secondary="Address" />
+                          <ListItemText
+                            primary={account.address}
+                            secondary="Address"
+                          />
                         </ListItem>
                         <ListItem>
                           <ListItemAvatar>
@@ -150,10 +149,13 @@ const Account: Function = ({
                               <AccountBalanceWalletIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary={formattedBalance} secondary="Balance (ETH)" />
+                          <ListItemText
+                            primary={formattedBalance}
+                            secondary="Balance (ETH)"
+                          />
                         </ListItem>
                       </>
-                    )
+                    );
                   }}
                 />
               )}
@@ -178,37 +180,42 @@ const Account: Function = ({
                   drizzleState={drizzleState}
                   contract="ExchangeToken"
                   method="getBalance"
-                  methodArgs={[drizzleState.accounts[0], { from: drizzleState.accounts[0] }]}
+                  methodArgs={[
+                    drizzleState.accounts[0],
+                    { from: drizzleState.accounts[0] },
+                  ]}
                   render={(displayData: any) => {
-                      let parsed: number;
-                      if(displayData != null) {
-                        parsed = parseInt(displayData);
-                      } else {
-                        parsed = 0;
-                      }
+                    let parsed: number;
+                    if (displayData != null) {
+                      parsed = parseInt(displayData);
+                    } else {
+                      parsed = 0;
+                    }
                     const formatted: string = parsed.toFixed(14);
 
                     return (
-                      <ListItemText primary={formatted} secondary="Balance (Exchange Tokens)" />
-                    )
+                      <ListItemText
+                        primary={formatted}
+                        secondary="Balance (Exchange Tokens)"
+                      />
+                    );
                   }}
                 />
               </ListItem>
             </List>
           </nav>
-        <Divider />
-        <Typography
-          variant="h4"
-          component="h3"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          Corn Futures
-        </Typography>
-        <nav>
-          <List>
-            
+          <Divider />
+          <Typography
+            variant="h4"
+            component="h3"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+          >
+            Corn Futures
+          </Typography>
+          <nav>
+            <List>
               {initialized && (
                 <ContractData
                   drizzle={drizzle}
@@ -216,45 +223,50 @@ const Account: Function = ({
                   contract="CornContract"
                   method="getMonths"
                   methodArgs={[{ from: drizzleState.accounts[0] }]}
-                  render={(displayData: any) => (
-
-                    displayData.map( (month: any) => {
-
+                  render={(displayData: any) =>
+                    displayData.map((month: any) => {
                       return (
                         <ContractData
                           drizzle={drizzle}
                           drizzleState={drizzleState}
                           contract="CornContract"
                           method="getBalance"
-                          methodArgs={[drizzleState.accounts[0], month, { from: drizzleState.accounts[0] }]}
+                          methodArgs={[
+                            drizzleState.accounts[0],
+                            month,
+                            { from: drizzleState.accounts[0] },
+                          ]}
                           render={(displayData: any) => {
-                              let parsed: number;
-                              if(displayData != null) {
-                                parsed = parseInt(displayData);
-                              } else {
-                                parsed = 0;
-                              }
+                            let parsed: number;
+                            if (displayData != null) {
+                              parsed = parseInt(displayData);
+                            } else {
+                              parsed = 0;
+                            }
                             const formatted: string = parsed.toFixed(14);
 
                             return (
-<ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <AccountBalanceWalletIcon />
-                </Avatar>
-              </ListItemAvatar>
-                              <ListItemText primary={formatted} secondary={`Corn Futures (${month})`} />
-            </ListItem>
-                            )
+                              <ListItem>
+                                <ListItemAvatar>
+                                  <Avatar>
+                                    <AccountBalanceWalletIcon />
+                                  </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                  primary={formatted}
+                                  secondary={`Corn Futures (${month})`}
+                                />
+                              </ListItem>
+                            );
                           }}
                         />
-                      )
+                      );
                     })
-                  )}
+                  }
                 />
               )}
-          </List>
-        </nav>
+            </List>
+          </nav>
         </CardContent>
       </Card>
     </>
