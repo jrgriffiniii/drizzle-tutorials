@@ -226,6 +226,7 @@ const Exchange: Function = ({
                     <AccountBalanceIcon />
                   </Avatar>
                 </ListItemAvatar>
+
                 {initialized && (
                   <ContractData
                     drizzle={drizzle}

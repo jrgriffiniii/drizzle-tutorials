@@ -13,11 +13,14 @@ abstract contract CommodityContract {
     // Map addresses to month codes
     mapping(address => mapping(string => uint256)) balances;
 
-    mapping(address => mapping(string => uint256)) bidPrices;
-    mapping(address => mapping(string => uint256)) askPrices;
+    // Map month codes to the last bid and last ask prices
+    mapping(string => uint256) bidPrices;
+    mapping(string => uint256) askPrices;
 
     event Received(address, uint256);
     event Fallback(address, uint256);
+    event Buy(address, string, uint256);
+    event Sell(address, string, uint256);
 
     constructor(string[] memory _months) {
         deployed = address(this);
@@ -80,6 +83,11 @@ abstract contract CommodityContract {
         //balances[msg.sender] += amount;
         balances[buyer][month] += amount;
         balances[msg.sender][month] -= amount;
+
+        bidPrices[month] = amount;
+
+        emit Buy(buyer, month, amount);
+        emit Sell(msg.sender, month, amount);
     }
 
     function buy(address seller, string memory month) external payable {
@@ -95,5 +103,10 @@ abstract contract CommodityContract {
 
         balances[seller][month] -= amount;
         balances[msg.sender][month] += amount;
+
+        askPrices[month] = amount;
+
+        emit Buy(msg.sender, month, amount);
+        emit Sell(seller, month, amount);
     }
 }

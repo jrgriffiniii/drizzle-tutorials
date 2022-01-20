@@ -102,7 +102,11 @@ const Home: Function = ({ drizzle, drizzleState, initialized }: HomeProps) => {
             initialized={initialized}
           />
 
-          <Market />
+          <Market
+            drizzle={drizzle}
+            drizzleState={drizzleState}
+            initialized={initialized}
+          />
         </Container>
       </main>
 

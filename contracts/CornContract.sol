@@ -8,11 +8,15 @@ contract CornContract is CommodityContract {
     constructor(string[] memory _months) CommodityContract(_months) {}
 
     function getBidPrice(string memory month) external view returns (uint256) {
-        return 1;
+      uint256 _price = bidPrices[month];
+
+      return _price;
     }
 
-    function getSellPrice(string memory month) external view returns (uint256) {
-        return 2;
+    function getAskPrice(string memory month) external view returns (uint256) {
+      uint256 _price = bidPrices[month];
+
+      return _price;
     }
 }
 
